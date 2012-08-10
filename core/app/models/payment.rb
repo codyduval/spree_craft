@@ -9,7 +9,7 @@ class Payment < ActiveRecord::Base
   after_save :create_payment_profile, :if => :profiles_supported?
 
   # update the order totals, etc.
-  after_save :update_order
+  after_save :update_order, :if => :not_subscription?
 
   accepts_nested_attributes_for :source
 
@@ -91,6 +91,10 @@ class Payment < ActiveRecord::Base
     res || payment_method
   end
 
+  def not_subscription?
+    subscription_id.nil?
+  end
+
   private
 
     def amount_is_valid_for_outstanding_balance_or_credit
@@ -115,5 +119,7 @@ class Payment < ActiveRecord::Base
       order.payments.reload
       order.update!
     end
+
+
 
 end
