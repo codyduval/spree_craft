@@ -6,7 +6,7 @@ class Creditcard < ActiveRecord::Base
 
   attr_accessor :number, :verification_value
 
-  validates :month, :year, :numericality => { :only_integer => true }
+  validates :month, :year, :unless => :has_payment_profile?, :numericality => { :only_integer => true }
   validates :number, :presence => true, :unless => :has_payment_profile?, :on => :create
   validates :verification_value, :presence => true, :unless => :has_payment_profile?, :on => :create
 
