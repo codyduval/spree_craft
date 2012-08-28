@@ -1,8 +1,5 @@
 Order.class_eval do
 
-  attr_accessible :coupon_code
-  attr_accessor :coupon_code
-
   def promotion_credit_exists?(promotion)
     !! adjustments.promotion.reload.detect { |credit| credit.originator.promotion.id == promotion.id }
   end
