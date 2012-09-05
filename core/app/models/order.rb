@@ -89,8 +89,8 @@ class Order < ActiveRecord::Base
       transition :from => 'confirm',  :to => 'complete'
 
       # note: some payment methods will not support a confirm step
-      transition :from => 'payment',  :to => 'confirm',
-                                      :if => Proc.new { Gateway.current && Gateway.current.payment_profiles_supported? }
+      # transition :from => 'payment',  :to => 'confirm',
+      #                                 :if => Proc.new { Gateway.current && Gateway.current.payment_profiles_supported? }
 
       transition :from => 'payment', :to => 'complete'
     end
