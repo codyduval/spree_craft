@@ -4,10 +4,9 @@ class Promotion < Activator
 
   preference :usage_limit, :integer
   preference :match_policy, :string, :default => MATCH_POLICIES.first
-  preference :code, :string
   preference :advertise, :boolean, :default => false
 
-  [:usage_limit, :match_policy, :code, :advertise].each do |field|
+  [:usage_limit, :match_policy, :advertise].each do |field|
     alias_method field, "preferred_#{field}"
     alias_method "#{field}=", "preferred_#{field}="
   end
@@ -28,7 +27,6 @@ class Promotion < Activator
 
 
   validates :name, :presence => true
-  validates :preferred_code, :presence => true, :if => lambda{|r| r.event_name == 'spree.checkout.coupon_code_added' }
 
   class << self
     def advertised
@@ -54,7 +52,7 @@ class Promotion < Activator
   end
 
   def eligible?(order, options = {})
-    !expired? && rules_are_eligible?(order, options) && coupon_is_eligible?(order, options[:coupon_code])
+    !expired? && rules_are_eligible?(order, options)
   end
 
   def rules_are_eligible?(order, options = {})
@@ -64,12 +62,6 @@ class Promotion < Activator
     else
       rules.any?{|r| r.eligible?(order, options)}
     end
-  end
-
-  def coupon_is_eligible?(order, code = nil)
-    return true if order && order.promotion_credit_exists?(self)
-    return true if event_name != 'spree.checkout.coupon_code_added'
-    code.to_s.strip.downcase == preferred_code.to_s.strip.downcase
   end
 
   # Products assigned to all product rules
