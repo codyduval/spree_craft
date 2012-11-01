@@ -3,6 +3,10 @@ class User < ActiveRecord::Base
   devise :cas_authenticatable, :token_authenticatable, :registerable, :recoverable,
          :rememberable, :trackable, :validatable, :encryptable, :encryptor => "authlogic_sha512"
 
+
+  # hack. https://github.com/nbudin/devise_cas_authenticatable/issues/9
+  include Devise::Models::DatabaseAuthenticatable
+  
   has_many :orders
   has_and_belongs_to_many :roles
   belongs_to :ship_address, :foreign_key => "ship_address_id", :class_name => "Address"
