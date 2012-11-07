@@ -103,12 +103,8 @@ class Order < ActiveRecord::Base
     before_transition :to => 'complete' do |order|
       begin
         order.process_payments!
-      rescue Spree::GatewayError
-        if Spree::Config[:allow_checkout_on_gateway_error]
-          true
-        else
-          false
-        end
+      rescue Spree::GatewayError => ex
+        errors.add(:base, ex.message)
       end
     end
 
