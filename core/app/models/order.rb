@@ -104,7 +104,7 @@ class Order < ActiveRecord::Base
       begin
         order.process_payments!
       rescue Spree::GatewayError => ex
-        errors.add(:base, ex.message)
+        order.errors.add(:base, ex.message)
       end
     end
 
