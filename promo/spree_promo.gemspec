@@ -17,7 +17,4 @@ Gem::Specification.new do |s|
   s.files        = Dir['README', 'LICENSE', 'app/**/*', 'config/**/*', 'lib/**/*', 'db/**/*']
   s.require_path = 'lib'
   s.requirements << 'none'
-
-  s.add_dependency 'spree_core', version
-  s.add_dependency 'spree_auth', version
 end
