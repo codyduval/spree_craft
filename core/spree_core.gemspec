@@ -34,5 +34,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails'
   s.add_dependency 'kaminari', '>= 0.12.4'
   s.add_dependency 'deface', '>= 0.7.0'
-  s.add_dependency 'bartt-ssl_requirement'
 end

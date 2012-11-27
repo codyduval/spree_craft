@@ -1,7 +1,5 @@
 module SpreeBase
   module InstanceMethods
-
-
     def access_forbidden
       render :text => 'Access Forbidden', :layout => true, :status => 401
     end
@@ -123,8 +121,7 @@ module SpreeBase
     receiver.send :helper_method, 'get_taxonomies'
     receiver.send :helper_method, 'current_gateway'
     receiver.send :helper_method, 'current_order'
+    receiver.send :include, SslRequirement
     receiver.send :include, Spree::CurrentOrder
-    receiver.send :include, ::SslRequirement
-
   end
 end
