@@ -2,6 +2,8 @@ source 'http://rubygems.org'
 
 gem 'json'
 gem 'sqlite3'
+gem 'bartt-ssl_requirement', :require => 'ssl_requirement'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
