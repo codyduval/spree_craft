@@ -1,5 +1,7 @@
 require 'mail'
 
+require 'ssl_requirement'
+
 # Spree Configuration
 SESSION_KEY = '_spree_session_id'
 #require 'spree/support/core_ext/array/conversions'
