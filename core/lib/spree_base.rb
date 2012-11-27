@@ -121,7 +121,6 @@ module SpreeBase
     receiver.send :helper_method, 'get_taxonomies'
     receiver.send :helper_method, 'current_gateway'
     receiver.send :helper_method, 'current_order'
-    receiver.send :include, SslRequirement
     receiver.send :include, Spree::CurrentOrder
   end
 end
