@@ -190,11 +190,7 @@ Rails.application.routes.draw do
 
     resources :trackers
     resources :payment_methods
-    resources :mail_methods do
-      member do
-        post :testmail
-      end
-    end
+    resources :mail_methods
     
   end
 
