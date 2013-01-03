@@ -40,6 +40,8 @@ require 'meta_search'
 require 'find_by_param'
 require 'jquery-rails'
 
+ActiveSupport::Deprecation.silenced = true
+
 require 'spree_core/ext/active_record'
 require 'spree_core/ext/hash'
 

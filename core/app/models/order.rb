@@ -73,6 +73,10 @@ class Order < ActiveRecord::Base
     total.to_f > 0.0
   end
 
+  def delivery_required?
+    false
+  end
+
   # Indicates the number of items in the order
   def item_count
     line_items.map(&:quantity).sum
@@ -83,6 +87,8 @@ class Order < ActiveRecord::Base
 
     event :next do
       transition :from => 'cart',     :to => 'address'
+      transition :from => 'address',  :to => 'delivery', :if => :delivery_required?
+      transition :from => 'delivery', :to => 'payment'
       transition :from => 'address',  :to => 'payment'
       transition :from => 'payment', :to => 'complete'
     end
