@@ -5,7 +5,7 @@ class Address < ActiveRecord::Base
   has_many :shipments
 
   validates :firstname, :lastname, :address1, :city, :zipcode, :country, :phone, :presence => true
-  validate :state_validate
+  #validate :state_validate
 
   # disconnected since there's no code to display error messages yet OR matching client-side validation
   def phone_validate
