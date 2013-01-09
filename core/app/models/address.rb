@@ -4,8 +4,8 @@ class Address < ActiveRecord::Base
 
   has_many :shipments
 
-  validates :firstname, :lastname, :address1, :city, :zipcode, :country, :phone, :presence => true
-  #validate :state_validate
+  validates :firstname, :lastname, :address1, :city, :country, :phone, :presence => true
+  validate :domestic_validate, :if => Proc.new{ |a| a.country_id == Spree::Config[:default_country_id] }
 
   # disconnected since there's no code to display error messages yet OR matching client-side validation
   def phone_validate
@@ -15,6 +15,11 @@ class Address < ActiveRecord::Base
     if !(n_digits > 5 && valid_chars)
       errors.add(:phone, :invalid)
     end
+  end
+
+  def domestic_validate
+    state_validate
+    errors.add(:zipcode, 'must be present') unless self.zipcode
   end
 
   def state_validate
