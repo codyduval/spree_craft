@@ -64,6 +64,8 @@ module SpreeCore
       app.config.assets.debug = false
     end
 
-
+    initializer "whitelist" do |app|
+      app.config.active_record.whitelist_attributes = false
+    end
   end
 end

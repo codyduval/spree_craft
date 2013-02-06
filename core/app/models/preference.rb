@@ -14,6 +14,8 @@ class Preference < ActiveRecord::Base
   validates :name, :owner_id, :owner_type, :presence => true
   validates :group_type, :presence => true, :if => :group_id?
 
+  attr_accessible :name, :group_id, :group_type
+
   class << self
     # Splits the given group into its corresponding id and type
     def split_group(group = nil)

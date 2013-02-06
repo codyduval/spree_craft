@@ -7,8 +7,6 @@ class CheckoutController < Spree::BaseController
   before_filter :load_order
   rescue_from Spree::GatewayError, :with => :rescue_from_spree_gateway_error
 
-  respond_to :html
-
   # Updates the order and advances to the next state (when possible.)
   def update
     if @order.update_attributes(object_params)
@@ -22,19 +20,19 @@ class CheckoutController < Spree::BaseController
         state_callback(:after)
       else
         flash[:error] = I18n.t(:payment_processing_failed)
-        respond_with(@order, :location => checkout_state_path(@order.state))
+        respond_to { |format| format.html { render :edit, :location => checkout_state_path(@order.state) } }
         return
       end
 
       if @order.state == "complete" || @order.completed?
         flash[:notice] = I18n.t(:order_processed_successfully)
         flash[:commerce_tracking] = "nothing special"
-        respond_with(@order, :location => completion_route)
+        respond_to { |format| format.html { render :edit, :location => completion_route } }
       else
-        respond_with(@order, :location => checkout_state_path(@order.state))
+        respond_to { |format| format.html { render :edit, :location => checkout_state_path(@order.state) } }
       end
     else
-      respond_with(@order) { |format| format.html { render :edit } }
+      respond_to { |format| format.html { render :edit } }
     end
   end
 

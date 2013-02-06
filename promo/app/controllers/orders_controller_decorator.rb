@@ -10,9 +10,9 @@ OrdersController.class_eval do
 
       @order.line_items = @order.line_items.select {|li| li.quantity > 0 }
       fire_event('spree.order.contents_changed')
-      respond_with(@order) { |format| format.html { redirect_to cart_path } }
+      respond_to { |format| format.html { redirect_to cart_path } }
     else
-      respond_with(@order)
+      respond_to { |format| format.html { render :edit } }
     end
   end
 

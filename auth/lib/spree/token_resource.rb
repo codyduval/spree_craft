@@ -1,5 +1,4 @@
 module Spree::TokenResource
-
   module ClassMethods
     def token_resource
       has_one :tokenized_permission, :as => :permissable

@@ -1,4 +1,7 @@
 class Address < ActiveRecord::Base
+
+  attr_accessible :country_id
+
   belongs_to :country
   belongs_to :state
 

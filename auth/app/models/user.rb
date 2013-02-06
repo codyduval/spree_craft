@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   before_validation :set_login
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :persistence_token
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :persistence_token
 
   scope :admin, lambda { includes(:roles).where("roles.name" => "admin") }
   scope :registered, where("users.email NOT LIKE ?", "%@example.net")
