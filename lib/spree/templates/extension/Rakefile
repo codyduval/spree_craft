@@ -12,7 +12,6 @@ require 'cucumber/rake/task'
 require 'spree_core/testing_support/common_rake'
 
 RSpec::Core::RakeTask.new
-Cucumber::Rake::Task.new
 
 task :default => [:spec, :cucumber ]
 
