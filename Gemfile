@@ -18,16 +18,6 @@ group :test do
   gem "shoulda-matchers"
 end
 
-group :cucumber do
-  gem 'cucumber-rails'
-  gem 'database_cleaner'
-  gem 'nokogiri'
-  gem 'capybara'
-  gem 'factory_girl_rails', '~> 1.7.0'
-  gem 'faker'
-  gem 'launchy'
-end
-
 if RUBY_VERSION < "1.9"
   gem "ruby-debug"
 else

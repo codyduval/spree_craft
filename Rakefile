@@ -13,11 +13,6 @@ def run_all_tests(database_name)
     sh "cd #{gem_name} && #{$0} test_app DB_NAME='#{database_name}'"
     sh "cd #{gem_name} && #{$0} spec"
   end
-
-  %w(auth core promo).each do |gem_name|
-    puts "########################### #{gem_name}|#{database_name} (features) ###########################"
-    sh "cd #{gem_name} && bundle exec cucumber -p ci"
-  end
 end
 
 task :default => :all_tests

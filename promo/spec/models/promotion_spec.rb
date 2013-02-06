@@ -5,7 +5,7 @@ describe Promotion do
   # let(:promotion) { FactoryGirl.create(:promotion) }
 
   describe "#save" do
-    let(:promotion_valid) { Promotion.new :name => "A promotion", :code => "XXXX" }
+    let(:promotion_valid) { Promotion.new :name => "A promotion" }
 
     context "when is invalid" do
       before { promotion.name = nil }
@@ -135,31 +135,6 @@ describe Promotion do
 
       specify { promotion.should be_eligible(@order) }
     end
-
-    context "when activated by coupon code event and a code is set" do
-      before {
-        promotion.event_name = 'spree.checkout.coupon_code_added'
-        promotion.preferred_code = 'ABC'
-      }
-      it "is false when payload doesn't include the matching code" do
-        promotion.should_not be_eligible(@order, {})
-      end
-      it "is true when payload includes the matching code" do
-        promotion.should be_eligible(@order, {:coupon_code => 'ABC'})
-      end
-    end
-
-    context "when a coupon code has already resulted in an adustment on the order" do
-      before {
-        promotion.preferred_code = 'ABC'
-        promotion.event_name = 'spree.checkout.coupon_code_added'
-        action = Promotion::Actions::CreateAdjustment.create!(:promotion => promotion)
-        action.calculator = Calculator::FlatRate.create!(:calculable => action)
-        action.perform(:order => @order)
-      }
-      specify { promotion.should be_eligible(@order) }
-    end
-
   end
 
   context "rules" do
