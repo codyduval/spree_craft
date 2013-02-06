@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe OrdersController do
+  before(:each) do
+    request.env["rack.url_scheme"] = "https"
+  end
   ORDER_TOKEN = "ORDER_TOKEN"
 
   let(:user) { mock_model User, :has_role? => false, :email => "user@example.com", :anonymous? => false }
@@ -116,7 +119,7 @@ describe OrdersController do
   end
 
   context "when no authenticated user" do
-    let(:order) { Factory(:order, :number => "R123") }
+    let(:order) { FactoryGirl.create(:order, :number => "R123") }
 
     context "#show" do
       context "when token parameter present" do

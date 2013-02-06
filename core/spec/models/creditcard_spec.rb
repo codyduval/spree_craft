@@ -10,7 +10,7 @@ describe Creditcard do
 
   before(:each) do
 
-    @order = Factory(:order)
+    @order = FactoryGirl.create(:order)
     @creditcard = Creditcard.new
     @payment = Payment.create(:amount => 100, :order => @order)
 

@@ -18,7 +18,7 @@ describe Product do
   end
 
   context "factory_girl" do
-    let(:product) { Factory(:product) }
+    let(:product) { FactoryGirl.create(:product) }
     it 'should have a saved product record' do
       product.new_record?.should be_false
     end
@@ -35,9 +35,9 @@ describe Product do
 
       context "permalink should be incremented until the value is not taken" do
         before do
-          @product1 = Factory(:product, :name => 'foo')
-          @product2 = Factory(:product, :name => 'foo')
-          @product3 = Factory(:product, :name => 'foo')
+          @product1 = FactoryGirl.create(:product, :name => 'foo')
+          @product2 = FactoryGirl.create(:product, :name => 'foo')
+          @product3 = FactoryGirl.create(:product, :name => 'foo')
         end
         it "should have valid permalink" do
           @product1.permalink.should == 'foo'
@@ -48,8 +48,8 @@ describe Product do
 
       context "make_permalink should declare validates_uniqueness_of" do
         before do
-          @product1 = Factory(:product, :name => 'foo')
-          @product2 = Factory(:product, :name => 'foo')
+          @product1 = FactoryGirl.create(:product, :name => 'foo')
+          @product2 = FactoryGirl.create(:product, :name => 'foo')
           @product2.update_attributes(:permalink => 'foo')
         end
         it "should have an error" do
@@ -86,7 +86,7 @@ describe Product do
     end
 
     context ".group_by_products_id.count" do
-      let(:product) { Factory(:product) }
+      let(:product) { FactoryGirl.create(:product) }
       it 'produces a properly formed ordered-hash key' do
         expected_key = (ActiveRecord::Base.connection.adapter_name == 'PostgreSQL') ?
           Product.column_names.map{|col_name| product.send(col_name)} :
@@ -100,15 +100,15 @@ describe Product do
   end
 
   context '#add_properties_and_option_types_from_prototype' do
-    let!(:prototype) { Factory(:prototype) }
-    let(:product) { Factory(:product, :prototype_id => prototype.id) }
+    let!(:prototype) { FactoryGirl.create(:prototype) }
+    let(:product) { FactoryGirl.create(:product, :prototype_id => prototype.id) }
     it 'should have one property' do
       product.product_properties.size.should == 1
     end
   end
 
   context '#has_stock?' do
-    let(:product) { Factory(:product) }
+    let(:product) { FactoryGirl.create(:product) }
     context 'nothing in stock' do
       before do
         Spree::Config.set :track_inventory_levels => true
@@ -126,7 +126,7 @@ describe Product do
       before do
         Spree::Config.set :track_inventory_levels => true
         product.master.update_attribute(:on_hand, 0)
-        Factory(:variant, :product => product, :on_hand => 100, :is_master => false, :deleted_at => nil)
+        FactoryGirl.create(:variant, :product => product, :on_hand => 100, :is_master => false, :deleted_at => nil)
         product.reload
       end
       specify { product.has_stock?.should be_true }
@@ -134,7 +134,7 @@ describe Product do
   end
 
   context '#effective_tax_rate' do
-    let(:product) { Factory(:product) }
+    let(:product) { FactoryGirl.create(:product) }
 
     it 'should check tax category for applicable rates' do
       TaxCategory.any_instance.should_receive(:effective_amount)

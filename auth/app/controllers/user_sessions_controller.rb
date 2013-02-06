@@ -6,8 +6,7 @@ class UserSessionsController < Devise::SessionsController
 
   after_filter :associate_user, :only => :create
 
-  ssl_required :new, :create, :destroy, :update
-  ssl_allowed :login_bar
+  force_ssl :only => [:new, :create, :destroy, :update, :login_bar]
 
   # GET /resource/sign_in
   def new

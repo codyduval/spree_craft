@@ -51,12 +51,12 @@ end
 Given /^apache cap has 1 line item$/ do
   product = Product.find_by_name('apache cap')
   master = product.master
-  Factory(:line_item, :variant => master)
+  FactoryGirl.create(:line_item, :variant => master)
 end
 
 Given /^ruby on rails t-shirt has 2 line items$/ do
   product = Product.find_by_name('ruby on rails t-shirt')
   master = product.master
-  Factory(:line_item, :variant => master)
-  Factory(:line_item, :variant => master)
+  FactoryGirl.create(:line_item, :variant => master)
+  FactoryGirl.create(:line_item, :variant => master)
 end

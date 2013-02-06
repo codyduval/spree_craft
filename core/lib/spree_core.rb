@@ -52,8 +52,6 @@ require 'spree_core/enumerable_constants'
 require 'spree_core/spree_custom_responder'
 require 'spree_core/spree_respond_with'
 
-
-require 'spree_core/ssl_requirement'
 require 'spree_core/preferences/model_hooks'
 require 'spree_core/preferences/preference_definition'
 require 'store_helpers'

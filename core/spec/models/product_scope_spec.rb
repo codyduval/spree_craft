@@ -9,7 +9,7 @@ describe ProductScope do
   # FIXME use factory in the following test
   context "#check_validity_of_scope" do
     before do
-      @pg = Factory(:product_group)
+      @pg = FactoryGirl.create(:product_group)
       @ps = ProductScope.create(:name => 'in_name', :arguments => ['Rails'], :product_group_id => @pg.id)
     end
     it 'should be valid' do

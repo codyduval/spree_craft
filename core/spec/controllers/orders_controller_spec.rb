@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe OrdersController do
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   let(:order) { mock_model(Order, :number => "R123", :reload => nil, :save! => true, :coupon_code= => nil, :user => user) }
   before do
     Order.stub(:find).with(1).and_return(order)

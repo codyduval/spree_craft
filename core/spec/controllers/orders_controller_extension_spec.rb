@@ -3,7 +3,7 @@ require 'spec_helper'
 describe OrdersController do
 
   before do
-    controller.stub :current_user => Factory(:user)
+    controller.stub :current_user => FactoryGirl.create(:user)
   end
 
   context "extension testing" do
@@ -11,7 +11,7 @@ describe OrdersController do
 
       context "render" do
         before do
-          @order = Factory(:order)
+          @order = FactoryGirl.create(:order)
           OrdersController.instance_eval do
             respond_override({:update => {:html => {:success => lambda { render(:text => 'success!!!') }}}})
             respond_override({:update => {:html => {:failure => lambda { render(:text => 'failure!!!') }}}})
@@ -28,7 +28,7 @@ describe OrdersController do
 
       context "redirect" do
         before do
-          @order = Factory(:order)
+          @order = FactoryGirl.create(:order)
           OrdersController.instance_eval do
             respond_override({:update => {:html => {:success => lambda { redirect_to(Order.first) }}}})
             respond_override({:update => {:html => {:failure => lambda { render(:text => 'failure!!!') }}}})
@@ -44,7 +44,7 @@ describe OrdersController do
 
       context "validation error" do
         before do
-          @order = Factory(:order)
+          @order = FactoryGirl.create(:order)
           Order.update_all("state='address'")
           OrdersController.instance_eval do
             respond_override({:update => {:html => {:success => lambda { render(:text => 'success!!!') }}}})

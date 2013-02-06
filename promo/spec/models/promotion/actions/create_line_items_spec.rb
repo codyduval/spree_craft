@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe Promotion::Actions::CreateLineItems do
-  let(:order) { Factory(:order) }
+  let(:order) { FactoryGirl.create(:order) }
   let(:promotion) { Promotion.new }
   let(:action) { Promotion::Actions::CreateLineItems.create }
 
   context "#perform" do
     before do
-      @v1 = Factory(:variant)
-      @v2 = Factory(:variant)
+      @v1 = FactoryGirl.create(:variant)
+      @v2 = FactoryGirl.create(:variant)
       action.promotion_action_line_items.create!(
         :variant => @v1,
         :quantity => 1
@@ -45,8 +45,8 @@ describe Promotion::Actions::CreateLineItems do
   context "#line_items_string=" do
 
     before do
-      @v1 = Factory(:variant)
-      @v2 = Factory(:variant)
+      @v1 = FactoryGirl.create(:variant)
+      @v2 = FactoryGirl.create(:variant)
     end
 
     it "creates promotion_action_line_items with matching variant and quantity for each pair in the string" do

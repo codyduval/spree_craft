@@ -1,6 +1,6 @@
 Given /^a custom shipping method exists$/ do
   ShippingMethod.delete_all
-  Factory(:shipping_method, :zone => Zone.find_by_name('North America'))
+  FactoryGirl.create(:shipping_method, :zone => Zone.find_by_name('North America'))
 end
 
 Given /^custom next on order$/ do
@@ -10,13 +10,13 @@ end
 
 Given /^custom order has a ship address$/ do
   order = Order.find_by_number('R100')
-  order.ship_address = Factory(:address)
+  order.ship_address = FactoryGirl.create(:address)
   order.save!
 end
 
 Given /^product is associated with order$/ do
   order = Order.last
-  product = Factory(:product, :name => 'spree t-shirt')
+  product = FactoryGirl.create(:product, :name => 'spree t-shirt')
   order.add_variant(product.master, 2)
   order.inventory_units.each do | iu |
     iu.update_attribute_without_callbacks('state', 'sold')
@@ -33,7 +33,7 @@ end
 
 Given /^custom line items associated with products$/ do
   Order.all.each do |order|
-    Factory(:line_item, :order => order)
+    FactoryGirl.create(:line_item, :order => order)
   end
 end
 
@@ -48,20 +48,20 @@ Given /^the custom address exists for the given orders$/ do
   raise 'there should be only three ordres' unless Order.count == 3
 
   o = orders[0]
-  address = Factory(:address, :firstname => 'john')
+  address = FactoryGirl.create(:address, :firstname => 'john')
   o.bill_address = address
   o.ship_address = address
   o.save
 
   o = orders[1]
-  address = Factory(:address, :firstname => 'john')
-  address = Factory(:address, :firstname => 'mary')
+  address = FactoryGirl.create(:address, :firstname => 'john')
+  address = FactoryGirl.create(:address, :firstname => 'mary')
   o.bill_address = address
   o.ship_address = address
   o.save
 
   o = orders[2]
-  address = Factory(:address, :firstname => 'angelina')
+  address = FactoryGirl.create(:address, :firstname => 'angelina')
   o.bill_address = address
   o.ship_address = address
   o.save

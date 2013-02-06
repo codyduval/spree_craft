@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Taxonomy do
 
   context "validation" do
-    it { should have_valid_factory(:taxonomy) }
+    it { should have_valid_factory.create(:taxonomy) }
   end
 
   context "shoulda validations" do

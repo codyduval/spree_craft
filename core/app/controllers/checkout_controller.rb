@@ -2,7 +2,7 @@
 # Checkout object.  There's enough distinct logic specific to checkout which has nothing to do with updating an
 # order that this approach is waranted.
 class CheckoutController < Spree::BaseController
-  ssl_required
+  force_ssl
 
   before_filter :load_order
   rescue_from Spree::GatewayError, :with => :rescue_from_spree_gateway_error

@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe CheckoutController do
+  before(:each) do
+    request.env["rack.url_scheme"] = "https"
+  end
   let(:order) { Order.new }
   let(:user) { mock_model User, :pending_promotions => [] }
   let(:token) { "some_token" }
@@ -23,7 +26,7 @@ describe CheckoutController do
         before { controller.stub :current_user => user }
 
         it "should proceed to the first checkout step" do
-          get :edit, { :state => "confirm" }
+          get :edit, { :state => "address" }
           response.should render_template :edit
         end
       end
@@ -32,7 +35,7 @@ describe CheckoutController do
         before { controller.stub :auth_user => user }
 
         it "should redirect to registration step" do
-          get :edit, { :state => "confirm" }
+          get :edit, { :state => "address" }
           response.should redirect_to checkout_registration_path
         end
       end
@@ -49,7 +52,7 @@ describe CheckoutController do
         before { controller.stub :current_user => user }
 
         it "should proceed to the first checkout step" do
-          get :edit, { :state => "confirm" }
+          get :edit, { :state => "address" }
           response.should render_template :edit
         end
       end
@@ -58,7 +61,7 @@ describe CheckoutController do
         before { controller.stub :auth_user => user }
 
         it "should proceed to the first checkout step" do
-          get :edit, { :state => "confirm" }
+          get :edit, { :state => "address" }
           response.should render_template :edit
         end
       end
@@ -67,7 +70,7 @@ describe CheckoutController do
 
     it "should check if the user is authorized for :edit" do
       controller.should_receive(:authorize!).with(:edit, order, token)
-      get :edit, { :state => "confirm" }, { :access_token => token }
+      get :edit, { :state => "address" }, { :access_token => token }
     end
 
   end
@@ -77,56 +80,8 @@ describe CheckoutController do
 
     it "should check if the user is authorized for :edit" do
       controller.should_receive(:authorize!).with(:edit, order, token)
-      post :update, { :state => "confirm" }, { :access_token => token }
+      post :update, { :state => "address" }, { :access_token => token }
     end
-
-    context "when save successful" do
-      before do
-        controller.stub :check_authorization
-        order.stub(:update_attribute).and_return true
-        order.should_receive(:update_attributes).and_return true
-      end
-
-      context "when in the confirm state" do
-        before do
-          order.stub :next => true
-          order.stub :state => "complete"
-          order.stub :number => "R123"
-        end
-
-        context "with a guest user" do
-          before do
-            order.stub :token => "ABC"
-            user.stub :has_role? => true
-            controller.stub :current_user => nil
-          end
-
-          it "should redirect to the tokenized order view" do
-            post :update, {:state => "confirm"}
-            response.should redirect_to token_order_path("R123", "ABC")
-          end
-
-          it "should populate the flash message" do
-            post :update, {:state => "confirm"}
-            flash[:notice].should == I18n.t(:order_processed_successfully)
-          end
-        end
-
-        context "with a registered user" do
-          before do
-            user.stub :has_role? => true
-            controller.stub :current_user => mock_model(User, :has_role? => true, :pending_promotions => [])
-          end
-
-          it "should redirect to the standard order view" do
-            post :update, {:state => "confirm"}
-            response.should redirect_to order_path("R123")
-          end
-        end
-
-      end
-    end
-
 
   end
 

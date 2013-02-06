@@ -6,7 +6,7 @@ describe Order do
     it { should have_valid_factory(:order) }
   end
 
-  let(:order) { Factory(:order) }
+  let(:order) { FactoryGirl.create(:order) }
   let(:gateway) { Gateway::Bogus.new(:name => "Credit Card", :active => true) }
 
   before do
@@ -17,11 +17,11 @@ describe Order do
   context "factory" do
     it "should change the Orders count by 1 after factory has been executed" do
       lambda do
-        Factory(:order_with_totals)
+        FactoryGirl.create(:order_with_totals)
       end.should change(Order, :count).by(1)
     end
     context 'line_item' do
-      let(:order) { Factory(:order_with_totals) }
+      let(:order) { FactoryGirl.create(:order_with_totals) }
       it "should have a line_item attached to it" do
         order.line_items.size.should == 1
       end
@@ -49,7 +49,7 @@ describe Order do
 
     context "when associated with a registered user" do
       let(:order) { Order.new }
-      let(:user) { Factory(:user, :email => "user@registered.com") }
+      let(:user) { FactoryGirl.create(:user, :email => "user@registered.com") }
       before {
         order.user = user
       }
@@ -406,7 +406,7 @@ describe Order do
 
     it "should call adjustemnt#update on every adjustment}" do
       # adjustment = mock_model(Adjustment, :amount => 5, :applicable? => true, :update! => true)
-      adjustment = Factory(:adjustment, :order => order, :amount => 5)
+      adjustment = FactoryGirl.create(:adjustment, :order => order, :amount => 5)
       # TODO: Restore this example. Stubbing adjustments doesn't work, need a proper collection
       # so we can use adjustments.eligible
       # order.stub(:adjustments => [adjustment])
@@ -417,7 +417,7 @@ describe Order do
 
     it "should call update! on every shipment" do
       # shipment = mock_model Shipment
-      shipment = Factory(:shipment)
+      shipment = FactoryGirl.create(:shipment)
       order.shipments = [shipment]
       shipment.should_receive(:update!)
       order.update!
@@ -441,9 +441,9 @@ describe Order do
 
     context "with adjustments" do
       before do
-        Factory(:adjustment, :order => order, :amount => 10)
-        Factory(:adjustment, :order => order, :amount => 5)
-        a = Factory(:adjustment, :order => order, :amount => -2, :eligible => false)
+        FactoryGirl.create(:adjustment, :order => order, :amount => 10)
+        FactoryGirl.create(:adjustment, :order => order, :amount => 5)
+        a = FactoryGirl.create(:adjustment, :order => order, :amount => -2, :eligible => false)
         a.update_attribute_without_callbacks(:eligible, false)
         order.stub(:update_adjustments, nil) # So the last adjustment remains ineligible
         order.adjustments.reload

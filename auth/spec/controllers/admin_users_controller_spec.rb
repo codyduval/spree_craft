@@ -3,13 +3,15 @@ require 'bar_ability.rb'
 require 'cancan'
 
 describe Admin::UsersController do
+  before(:each) do
+    request.env["rack.url_scheme"] = "https"
+  end
   context "#authorize_admin" do
-    let(:user) { User.new }
-    let(:mock_user) { mock_model User }
+    let(:user) { FactoryGirl.create(:user) }
     before do
       controller.stub :current_user => user
-      User.stub(:find).with('9').and_return(mock_user)
-      User.stub(:new).and_return(mock_user)
+      User.stub(:find).with('1').and_return(user)
+      User.stub(:new).and_return(user)
     end
     after(:each) { user.roles = [] }
     it "should grant access to users with an admin role" do
@@ -27,7 +29,7 @@ describe Admin::UsersController do
     it "should deny access to users with an bar role" do
       user.roles = [Role.find_or_create_by_name('bar')]
       Ability.register_ability(BarAbility)
-      post :update, {:id => '9'}
+      post :update, {:id => '1'}
       response.should render_template "shared/unauthorized"
     end
     it "should deny access to users without an admin role" do

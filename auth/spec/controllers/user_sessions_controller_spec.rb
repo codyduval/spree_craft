@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe UserSessionsController do
+  before(:each) do
+    request.env["rack.url_scheme"] = "https"
+  end
 
   context "#create" do
     context "when current_order is associated with a guest user" do

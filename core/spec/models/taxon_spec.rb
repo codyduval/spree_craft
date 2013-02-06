@@ -4,7 +4,7 @@ describe Taxon do
   let(:taxon) { Taxon.new(:name => "Ruby on Rails") }
 
   context "validation" do
-    it { should have_valid_factory(:taxon) }
+    it { should have_valid_factory.create(:taxon) }
   end
 
   context "set_permalink" do

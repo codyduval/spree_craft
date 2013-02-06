@@ -8,7 +8,7 @@ describe Payment do
 
   let(:order) { mock_model(Order, :update! => nil, :payments => []) }
   let(:gateway) { Gateway::Bogus.new(:environment => 'test', :active => true) }
-  let(:card) { Factory(:creditcard) }
+  let(:card) { FactoryGirl.create(:creditcard) }
 
   before(:each) do
     @payment = Payment.new(:order => order)

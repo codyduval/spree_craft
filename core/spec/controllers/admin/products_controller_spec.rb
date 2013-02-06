@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Admin::ProductsController do
   before do
-    controller.stub :current_user => Factory(:admin_user)
+    controller.stub :current_user => FactoryGirl.create(:admin_user)
   end
   
   context "#index" do

@@ -15,11 +15,11 @@ Then /^I should be logged out$/ do
 end
 
 Given /^I am signed up as "(.+)\/(.+)"$/ do |email, password|
-  Factory(:user, :email => email, :password => password, :password_confirmation => password)
+  FactoryGirl.create(:user, :email => email, :password => password, :password_confirmation => password)
 end
 
 Given /^I have an admin account of "(.+)\/(.+)"$/ do |email, password|
-  Factory(:admin_user,  :email => email, :password => password, :password_confirmation => password)
+  FactoryGirl.create(:admin_user,  :email => email, :password => password, :password_confirmation => password)
 end
 
 When /^I sign in as "(.*)\/(.*)"$/ do |email, password|

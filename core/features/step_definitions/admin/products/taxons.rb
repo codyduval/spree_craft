@@ -4,8 +4,8 @@ Then /^I should see (.*) tabular records with selector "(.*)"$/ do |count, selec
 end
 
 Given /^custom taxons exist$/ do
-  taxon = Factory(:taxon, :name => 'Brands')
-  taxon2 = Factory(:taxon, :taxonomy => taxon.taxonomy, :parent_id => taxon.id, :name => 'Apache')
+  taxon = FactoryGirl.create(:taxon, :name => 'Brands')
+  taxon2 = FactoryGirl.create(:taxon, :taxonomy => taxon.taxonomy, :parent_id => taxon.id, :name => 'Apache')
 end
 
 Then /^verify admin taxons listing$/ do

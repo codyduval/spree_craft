@@ -5,7 +5,7 @@ describe Admin::MailMethodsController do
   let(:mail_method) { mock_model(MailMethod).as_null_object }
 
   before do
-    controller.stub :current_user => Factory(:admin_user)
+    controller.stub :current_user => FactoryGirl.create(:admin_user)
     Order.stub :find => order
     MailMethod.stub :find => mail_method
   end

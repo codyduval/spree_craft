@@ -34,6 +34,6 @@ Then /^I should see listing products tabular attributes with custom result 2$/ d
 end
 
 Given /^a product exists with a sku of "a100"$/ do
-  Factory(:product, :sku => 'a100')
+  FactoryGirl.create(:product, :sku => 'a100')
 end
 

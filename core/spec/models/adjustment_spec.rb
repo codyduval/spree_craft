@@ -9,8 +9,8 @@ describe Adjustment do
   context "factory_girl" do
     before do
       Order.delete_all
-      @order = Factory(:order)
-      @adjustment = Factory(:adjustment, :order => @order)
+      @order = FactoryGirl.create(:order)
+      @adjustment = FactoryGirl.create(:adjustment, :order => @order)
     end
     it 'should refer to the order that was passed to the factory' do
       @adjustment.order.id.should == @order.id

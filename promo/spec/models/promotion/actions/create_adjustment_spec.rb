@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Promotion::Actions::CreateAdjustment do
-  let(:order) { Factory(:order) }
-  let(:promotion) { Factory(:promotion) }
+  let(:order) { FactoryGirl.create(:order) }
+  let(:promotion) { FactoryGirl.create(:promotion) }
   let(:action) { Promotion::Actions::CreateAdjustment.new }
 
   # From promotion spec:

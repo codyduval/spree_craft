@@ -4,7 +4,7 @@ When /^(?:|I )fill (billing|shipping) address with correct data$/ do |address_ty
     @me.send(str_addr)
   else
     state = State.first
-    Factory(:address, :state => state)
+    FactoryGirl.create(:address, :state => state)
   end
 
   When %{I select "United States" from "Country" within "fieldset##{address_type}"}
@@ -26,7 +26,7 @@ Given /^a product with (.*?)? exists$/ do |captured_fields|
   price = fields.delete('price')
 
   if Product.search.master_price_equals(price).count(:conditions => fields) == 0
-    product = Factory(:product, fields.merge('price' => price,  :sku => 'ABC',
+    product = FactoryGirl.create(:product, fields.merge('price' => price,  :sku => 'ABC',
                                                       :available_on => (Time.now - 100.days)))
 
     product.on_hand = 10
@@ -44,7 +44,7 @@ When /^(?:|I )add a product with (.*?)? to cart$/ do |captured_fields|
   price = fields.delete('price')
 
   if Product.search.master_price_equals(price).count(:conditions => fields) == 0
-    product = Factory(:product, fields.merge('price' => price,  :sku => 'ABC',
+    product = FactoryGirl.create(:product, fields.merge('price' => price,  :sku => 'ABC',
                                                       :available_on => (Time.now - 100.days)))
 
     product.on_hand = 10

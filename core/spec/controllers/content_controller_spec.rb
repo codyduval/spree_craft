@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ContentController do
   before do
-    controller.stub :current_user => Factory(:user)
+    controller.stub :current_user => FactoryGirl.create(:user)
   end
 
 

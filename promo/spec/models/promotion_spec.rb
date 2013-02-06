@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Promotion do
   let(:promotion) { Promotion.new }
-  # let(:promotion) { Factory(:promotion) }
+  # let(:promotion) { FactoryGirl.create(:promotion) }
 
   describe "#save" do
     let(:promotion_valid) { Promotion.new :name => "A promotion", :code => "XXXX" }
@@ -119,9 +119,9 @@ describe Promotion do
   end
 
   context "#eligible?" do
-    let(:promotion) { Factory(:promotion) }
+    let(:promotion) { FactoryGirl.create(:promotion) }
     before {
-      @order = Factory(:order)
+      @order = FactoryGirl.create(:order)
     }
 
     context "when it is expired" do

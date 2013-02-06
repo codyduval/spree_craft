@@ -12,9 +12,9 @@ describe Gateway::Braintree do
     @gateway.save!
 
     with_payment_profiles_off do
-      @country = Factory(:country, :name => "United States", :iso_name => "UNITED STATES", :iso3 => "USA", :iso => "US", :numcode => 840)
-      @state   = Factory(:state, :name => "Maryland", :abbr => "MD", :country => @country)
-      @address = Factory(:address,
+      @country = FactoryGirl.create(:country, :name => "United States", :iso_name => "UNITED STATES", :iso3 => "USA", :iso => "US", :numcode => 840)
+      @state   = FactoryGirl.create(:state, :name => "Maryland", :abbr => "MD", :country => @country)
+      @address = FactoryGirl.create(:address,
         :firstname => 'John',
         :lastname => 'Doe',
         :address1 => '1234 My Street',
@@ -25,10 +25,10 @@ describe Gateway::Braintree do
         :state => @state,
         :country => @country
       )
-      @order = Factory(:order_with_totals, :bill_address => @address, :ship_address => @address)
+      @order = FactoryGirl.create(:order_with_totals, :bill_address => @address, :ship_address => @address)
       @order.update!
-      @creditcard = Factory(:creditcard, :verification_value => '123', :number => '5105105105105100', :month => 9, :year => Time.now.year + 1, :first_name => 'John', :last_name => 'Doe')
-      @payment = Factory(:payment, :source => @creditcard, :order => @order, :payment_method => @gateway, :amount => @order.total)
+      @creditcard = FactoryGirl.create(:creditcard, :verification_value => '123', :number => '5105105105105100', :month => 9, :year => Time.now.year + 1, :first_name => 'John', :last_name => 'Doe')
+      @payment = FactoryGirl.create(:payment, :source => @creditcard, :order => @order, :payment_method => @gateway, :amount => @order.total)
     end
 
   end

@@ -10,41 +10,41 @@ Given /^the custom taxons and custom products exist$/ do
   root = taxonomy.root
   taxon = taxonomy.taxons.create(:name => "Ruby on Rails", :parent_id => root.id)
 
-  product = Factory(:product, :name => "Ruby on Rails Ringer T-shirt", :price => "17.99")
+  product = FactoryGirl.create(:product, :name => "Ruby on Rails Ringer T-shirt", :price => "17.99")
   product.taxons << taxon
   product.taxons << clothing_taxon
 
-  product = Factory(:product, :name => "Ruby on Rails Mug", :price => "13.99")
+  product = FactoryGirl.create(:product, :name => "Ruby on Rails Mug", :price => "13.99")
   product.taxons << taxon
   product.taxons << mugs_taxon
 
-  product = Factory(:product, :name => "Ruby on Rails Tote", :price => "15.99")
+  product = FactoryGirl.create(:product, :name => "Ruby on Rails Tote", :price => "15.99")
   product.taxons << taxon
   product.taxons << bags_taxon
 
-  product = Factory(:product, :name => "Ruby on Rails Bag", :price => "22.99")
+  product = FactoryGirl.create(:product, :name => "Ruby on Rails Bag", :price => "22.99")
   product.taxons << taxon
   product.taxons << bags_taxon
 
-  product = Factory(:product, :name => "Ruby on Rails Baseball Jersey", :price => "19.99")
+  product = FactoryGirl.create(:product, :name => "Ruby on Rails Baseball Jersey", :price => "19.99")
   product.taxons << taxon
   product.taxons << clothing_taxon
 
-  product = Factory(:product, :name => "Ruby on Rails Stein", :price => "16.99")
+  product = FactoryGirl.create(:product, :name => "Ruby on Rails Stein", :price => "16.99")
   product.taxons << taxon
   product.taxons << mugs_taxon
 
-  product = Factory(:product, :name => "Ruby on Rails Jr. Spaghetti", :price => "19.99")
+  product = FactoryGirl.create(:product, :name => "Ruby on Rails Jr. Spaghetti", :price => "19.99")
   product.taxons << taxon
   product.taxons << clothing_taxon
 
   taxon = taxonomy.taxons.create(:name => "Ruby", :parent_id => root.id)
-  product = Factory(:product, :name => "Ruby Baseball Jersey", :price => "19.99")
+  product = FactoryGirl.create(:product, :name => "Ruby Baseball Jersey", :price => "19.99")
   product.taxons << taxon
   product.taxons << clothing_taxon
 
   taxon = taxonomy.taxons.create(:name => "Apache", :parent_id => root.id)
-  product = Factory(:product, :name => "Apache Baseball Jersey", :price => "19.99")
+  product = FactoryGirl.create(:product, :name => "Apache Baseball Jersey", :price => "19.99")
   product.taxons << taxon
   product.taxons << clothing_taxon
 

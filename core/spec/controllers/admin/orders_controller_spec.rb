@@ -5,7 +5,7 @@ describe Admin::OrdersController do
   let(:order) { mock_model(Order, :complete? => true, :total => 100) }
 
   before do
-    controller.stub :current_user => Factory(:admin_user)
+    controller.stub :current_user => FactoryGirl.create(:admin_user)
     Order.stub :find_by_number => order
     request.env["HTTP_REFERER"] = "http://localhost:3000"
   end

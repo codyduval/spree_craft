@@ -8,13 +8,13 @@ Gem::PackageTask.new(spec) do |pkg|
 end
 
 def run_all_tests(database_name)
-  %w(api auth core dash promo).each do |gem_name|
+  %w(auth core promo).each do |gem_name|
     puts "########################### #{gem_name}|#{database_name} (spec) ###########################"
     sh "cd #{gem_name} && #{$0} test_app DB_NAME='#{database_name}'"
     sh "cd #{gem_name} && #{$0} spec"
   end
 
-  %w(api auth core promo).each do |gem_name|
+  %w(auth core promo).each do |gem_name|
     puts "########################### #{gem_name}|#{database_name} (features) ###########################"
     sh "cd #{gem_name} && bundle exec cucumber -p ci"
   end
@@ -40,7 +40,7 @@ desc "clean the whole repository by removing all the generated files"
 task :clean do
   cmd = "rm -rf sandbox"; puts cmd; system cmd
   cmd = "rm -rf pkg"; puts cmd; system cmd
-  %w(api auth core dash promo).each do |gem_name|
+  %w(auth core promo).each do |gem_name|
     cmd = "rm #{gem_name}/Gemfile*"; puts cmd; system cmd
     cmd = "rm -rf #{gem_name}/pkg"; puts cmd; system cmd
     cmd = "cd #{gem_name}/spec &&  rm -rf dummy"; puts cmd; system cmd

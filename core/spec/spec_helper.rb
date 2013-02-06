@@ -42,6 +42,6 @@ ORDER_STATES = Order.state_machine.states.keys unless defined? ORDER_STATES
 # end
 RSpec::Matchers.define :have_valid_factory do |factory_name|
   match do |model|
-    Factory(factory_name).new_record?.should be_false
+    FactoryGirl.create(factory_name).new_record?.should be_false
   end
 end

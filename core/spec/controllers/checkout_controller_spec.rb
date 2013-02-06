@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CheckoutController do
   let(:order) { mock_model(Order, :checkout_allowed? => true, :completed? => false, :update_attributes => true, :payment? => false, :insufficient_stock_lines => []).as_null_object }
   before do
-     controller.stub :current_order => order, :current_user => Factory(:user)
+     controller.stub :current_order => order, :current_user => FactoryGirl.create(:user)
    end
 
   it "should understand checkout routes" do

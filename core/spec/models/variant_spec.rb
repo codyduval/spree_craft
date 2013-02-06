@@ -4,7 +4,7 @@ describe Variant do
   let(:variant) { Variant.new(:count_on_hand => 95) }
 
   context "validations" do
-    it { should have_valid_factory(:variant) }
+    it { should have_valid_factory.create(:variant) }
   end
 
   context "on_hand=" do

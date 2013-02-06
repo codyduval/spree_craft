@@ -4,5 +4,5 @@ end
 
 Given /^an adjustment exists for order R100$/ do
   order = Order.find_by_number('R100')
-  Factory(:adjustment, :order => order)
+  FactoryGirl.create(:adjustment, :order => order)
 end

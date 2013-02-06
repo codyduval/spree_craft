@@ -1,6 +1,8 @@
 SUMMARY
 -------
 
+This is a specialized fork of Spree 0.70.0 used by Craft Coffee. It has had several changes to fit the needs of our codebase, and will probably not work standing alone with yours. 
+
 Spree is a complete open source commerce solution for Ruby on Rails.  It was originally developed by Sean Schofield
 and is now maintained by a dedicated [core team](http://spreecommerce.com/core-team).  You can find out more about
 by visiting the [Spree e-commerce project page](http://spreecommerce.com).
@@ -9,10 +11,8 @@ Spree actually consists of several different gems, each of which are maintained 
 in a single set of [online documentation](http://spreecommerce.com/documentation).  By requiring the Spree gem you
 automatically require all of the necessary dependency gems.  Those gems are as follows:
 
-* spree_api
 * spree_auth
 * spree_core
-* spree_dash
 * spree_promo
 * spree_sample
 
