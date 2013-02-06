@@ -15,6 +15,7 @@ group :test do
   gem 'factory_girl_rails', '~> 1.7.0'
   gem 'faker'
   gem 'pry'
+  gem "shoulda-matchers"
 end
 
 group :cucumber do

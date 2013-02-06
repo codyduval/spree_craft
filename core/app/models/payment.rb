@@ -92,7 +92,11 @@ class Payment < ActiveRecord::Base
   end
 
   def not_subscription?
-    subscription_id.nil?
+    if self.respond_to?(:subscription_id)
+      subscription_id.nil?
+    else
+      true
+    end
   end
 
   private

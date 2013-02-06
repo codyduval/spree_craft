@@ -1,7 +1,12 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Admin::GeneralSettingsController do
+  before(:each) do
+    request.env["rack.url_scheme"] = "https"
+  end
+
   before :each do 
+
     controller.stub :current_user => mock_model(User, :has_role? => true)
   end
 

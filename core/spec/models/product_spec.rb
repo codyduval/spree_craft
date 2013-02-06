@@ -78,13 +78,6 @@ describe Product do
       end
     end
 
-    context ".price_between" do
-      it 'produces correct sql' do
-        sql = %Q{SELECT "products".* FROM "products" INNER JOIN "variants" ON "variants"."product_id" = "products"."id" AND variants.is_master = 't' AND variants.deleted_at IS NULL WHERE (variants.price BETWEEN 10 AND 20)}
-        Product.price_between(10, 20).to_sql.gsub('`', '"').sub(/1\b/, "'t'").should == sql.gsub('`', '"').sub(/1\b/, "'t'")
-      end
-    end
-
     context ".group_by_products_id.count" do
       let(:product) { FactoryGirl.create(:product) }
       it 'produces a properly formed ordered-hash key' do

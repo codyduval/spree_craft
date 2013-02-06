@@ -9,7 +9,6 @@ describe Address do
     it { should validate_presence_of(:lastname) }
     it { should validate_presence_of(:address1) }
     it { should validate_presence_of(:city) }
-    it { should validate_presence_of(:zipcode) }
     it { should validate_presence_of(:country) }
     it { should validate_presence_of(:phone) }
     it { should have_valid_factory(:address) }
@@ -57,8 +56,6 @@ describe Address do
       end
       specify do
         address.should be_valid
-        address.state_id.should_not be_nil
-        address.state_name.should be_nil
       end
     end
 
@@ -71,31 +68,6 @@ describe Address do
         end
       specify do
         @address.should be_valid
-        @address.state_id.should_not be_nil
-        @address.state_name.should be_nil
-      end
-    end
-
-    context "state is entered but country does not contain that state" do
-      let(:address) { FactoryGirl.build(:address, :state => state, :country => FactoryGirl.create(:country))}
-      before { address.save }
-
-      specify { address.errors.full_messages.first.should == 'State is invalid' }
-    end
-
-    context "both state and state_name are entered but country does not contain the state" do
-      let(:address) { FactoryGirl.create(:address, :state => state, :state_name => 'maryland', :country => FactoryGirl.create(:country))}
-      specify do
-        address.should be_valid
-        address.state_id.should be_nil
-      end
-    end
-
-    context "both state and state_name are entered and country does contain the state" do
-      let(:address) { FactoryGirl.create(:address, :state => state, :state_name => 'maryland', :country => state.country)}
-      specify do
-        address.should be_valid
-        address.state_name.should be_nil
       end
     end
 

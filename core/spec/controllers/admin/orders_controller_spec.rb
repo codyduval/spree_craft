@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Admin::OrdersController do
 
+  before(:each) do
+    request.env["rack.url_scheme"] = "https"
+  end
+
   let(:order) { mock_model(Order, :complete? => true, :total => 100) }
 
   before do

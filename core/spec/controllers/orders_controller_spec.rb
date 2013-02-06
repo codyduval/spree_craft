@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe OrdersController do
+  before(:each) do
+    request.env["rack.url_scheme"] = "https"
+  end
   let(:user) { FactoryGirl.create(:user) }
   let(:order) { mock_model(Order, :number => "R123", :reload => nil, :save! => true, :coupon_code= => nil, :user => user) }
   before do

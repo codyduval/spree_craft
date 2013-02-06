@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Admin::MailMethodsController do
+  before(:each) do
+    request.env["rack.url_scheme"] = "https"
+  end
   let(:order) { mock_model(Order, :complete? => true).as_null_object }
   let(:mail_method) { mock_model(MailMethod).as_null_object }
 

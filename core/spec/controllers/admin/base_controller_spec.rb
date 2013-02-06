@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Admin::BaseController do
 
+  before(:each) do
+    request.env["rack.url_scheme"] = "https"
+  end
+
   describe "Spree Alert Checks" do
     it "only checks once per session" do
       controller.stub(:current_user => true)

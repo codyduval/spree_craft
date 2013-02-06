@@ -80,98 +80,6 @@ describe Order do
     it "should destroy any line_items with zero quantity"
   end
 
-  context "#next!" do
-    context "when current state is confirm" do
-      before { order.state = "confirm" }
-      it "should finalize order when transitioning to complete state" do
-        order.should_receive(:finalize!)
-        order.next!
-      end
-
-       context "when credit card payment fails" do
-         before do
-           order.stub(:process_payments!).and_raise(Spree::GatewayError)
-         end
-
-         context "when not configured to allow failed payments" do
-            before do
-              Spree::Config.set :allow_checkout_on_gateway_error => false
-            end
-
-            it "should not complete the order" do
-               order.next
-               order.state.should == "confirm"
-             end
-          end
-
-         context "when configured to allow failed payments" do
-           before do
-             Spree::Config.set :allow_checkout_on_gateway_error => true
-           end
-
-           it "should complete the order" do
-              order.next
-              order.state.should == "complete"
-            end
-
-         end
-
-       end
-    end
-    context "when current state is address" do
-      let(:sales_tax) { mock_model Calculator::SalesTax, :description => "Sales Tax" }
-      let(:rate) { mock_model TaxRate, :amount => 10, :calculator => sales_tax }
-      let(:rate_1) { mock_model TaxRate, :amount => 15, :calculator => sales_tax } 
-
-      before do
-        order.state = "address"
-        TaxRate.stub :match => [rate, rate_1]
-      end
-
-      it "should create a tax charge when transitioning to delivery state" do
-        [rate, rate_1].each { |r| r.should_receive(:create_adjustment) }
-        order.next!
-      end
-
-      context "when a tax charge already exists" do
-        let(:old_charge) { mock_model Adjustment }
-        before { order.stub_chain :adjustments, :tax => [old_charge] }
-
-        it "should remove an existing tax charge (for the old rate)" do
-          [rate, rate_1].each { |r| r.should_receive(:create_adjustment) }
-          old_charge.should_receive :destroy
-          order.next
-        end
-
-        it "should remove an existing tax charge if there is no longer a relevant tax rate" do
-          TaxRate.stub :match => []
-          old_charge.stub :originator => mock_model(TaxRate)
-          old_charge.should_receive :destroy
-          order.next
-        end
-      end
-
-    end
-
-
-    context "when current state is delivery" do
-      before do
-        order.state = "delivery"
-        order.shipping_method = mock_model(ShippingMethod).as_null_object
-        order.stub :total => 10.0
-      end
-
-      context "when transitioning to payment state" do
-        it "should create a shipment" do
-          order.next!
-          order.state.should == 'payment'
-          order.shipments.size.should == 1
-        end
-      end
-    end
-
-  end
-
   context "#generate_order_number" do
     it "should generate a random string" do
       order.generate_order_number.is_a?(String).should be_true
@@ -239,11 +147,6 @@ describe Order do
       order.payment_total = 20.20
       order.total = 30.30
       order.outstanding_balance.should == 10.10
-    end
-    it "should return negative amount when payment_total is greater than total" do
-      order.total = 8.20
-      order.payment_total = 10.20
-      order.outstanding_balance.should == -2.00
     end
 
   end

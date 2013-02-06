@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Admin::UsersController do
+
+  before(:each) do
+    request.env["rack.url_scheme"] = "https"
+  end
+  
   before do
     controller.stub :current_user => FactoryGirl.create(:admin_user)
   end
