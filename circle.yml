@@ -1,0 +1,21 @@
+## Customize the test machine
+machine:
+
+  timezone:
+    America/New_York # Set the timezeone
+
+  # Add some environmental variables
+  environment:
+    CIRCLE_ENV: test
+
+dependencies:
+  pre:
+    - yes | gem uninstall bundler
+    - gem install bundler -v '1.2.2'
+
+test:
+  override:
+    - rake
+
+
+    
