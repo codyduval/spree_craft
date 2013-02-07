@@ -4,7 +4,7 @@ class Admin::ProductsController < Admin::ResourceController
   update.before :update_before
 
   def index
-    respond_with(@collection) do |format|
+    respond_to do |format|
       format.html
       format.json { render :json => json_data }
     end
@@ -27,7 +27,7 @@ class Admin::ProductsController < Admin::ResourceController
       flash.notice = I18n.t("notice_messages.product_not_deleted")
     end
 
-    respond_with(@product) do |format|
+    respond_to do |format|
       format.html { redirect_to collection_url }
       format.js  { render_js_for_destroy }
     end
@@ -42,7 +42,7 @@ class Admin::ProductsController < Admin::ResourceController
       flash.notice = I18n.t("notice_messages.product_not_cloned")
     end
 
-    respond_with(@new) { |format| format.html { redirect_to edit_admin_product_url(@new) } }
+    respond_to { |format| format.html { redirect_to edit_admin_product_url(@new) } }
   end
 
   protected

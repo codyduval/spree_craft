@@ -7,6 +7,10 @@ class Admin::UsersController < Admin::ResourceController
   update.before :save_user_roles
 
   def index
+    respond_to do |format|
+      format.html
+      format.json { render :json => json_data }
+    end
   end
 
   protected

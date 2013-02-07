@@ -17,6 +17,8 @@ class MailMethod < ActiveRecord::Base
 
   validates :environment, :presence => true
 
+  attr_accessible :environment
+
   def self.current
     MailMethod.where(:environment => Rails.env).first
   end

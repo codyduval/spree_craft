@@ -5,6 +5,7 @@ class TaxCategory < ActiveRecord::Base
 
   before_save :set_default_category
 
+
   def set_default_category
     #set existing default tax category to false if this one has been marked as default
 

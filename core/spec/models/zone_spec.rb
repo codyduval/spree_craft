@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Zone do
 
-  let(:zone) { Factory :zone }
+  let(:zone) { FactoryGirl.create :zone }
 
   context 'factory' do
-    #let(:zone){ Factory :zone }
+    #let(:zone){ FactoryGirl.create :zone }
 
     it "should set zone members correctly" do
       zone.zone_members.count.should == 1

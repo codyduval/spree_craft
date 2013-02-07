@@ -92,7 +92,7 @@ describe Calculator::Vat do
   end
 
   context ".calculate_tax_on variant" do
-    let(:variant) { Factory :variant, :price => 20.0 }
+    let(:variant) { FactoryGirl.create:variant, :price => 20.0 }
 
     it "should calculate correctly" do
       variant.product.stub :effective_tax_rate => BigDecimal.new("0.2")
@@ -102,7 +102,7 @@ describe Calculator::Vat do
   end
 
   context ".calculate_tax_on product" do
-    let(:product) { Factory :product, :price => 10.0 }
+    let(:product) { FactoryGirl.create:product, :price => 10.0 }
 
     it "should calculate correctly" do
       product.stub :effective_tax_rate => BigDecimal.new("0.2")

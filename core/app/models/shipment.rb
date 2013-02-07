@@ -11,6 +11,7 @@ class Shipment < ActiveRecord::Base
   after_save :ensure_correct_adjustment, :update_order
 
   attr_accessor :special_instructions
+  attr_accessible :order, :state, :shipping_method
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :inventory_units
 

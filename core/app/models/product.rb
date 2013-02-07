@@ -28,6 +28,8 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :taxons
   belongs_to :shipping_category
 
+  attr_accessible :permalink
+
   has_one :master,
     :class_name => 'Variant',
     :conditions => ["variants.is_master = ? AND variants.deleted_at IS NULL", true]

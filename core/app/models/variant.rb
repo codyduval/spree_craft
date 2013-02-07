@@ -2,6 +2,8 @@ class Variant < ActiveRecord::Base
   belongs_to :product
   delegate_belongs_to :product, :name, :description, :permalink, :available_on, :tax_category_id, :shipping_category_id, :meta_description, :meta_keywords
 
+  attr_accessible :count_on_hand
+  
   has_many :inventory_units
   has_many :line_items
   has_and_belongs_to_many :option_values

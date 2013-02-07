@@ -19,6 +19,10 @@ class Payment < ActiveRecord::Base
   scope :pending, with_state('pending')
   scope :failed, with_state('failed')
 
+  attr_accessible :amount, :order, :type, :name, :display_on, :active, 
+                  :environment, :description, :source, :payment_method,
+                  :response_code, :state
+
   # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
   state_machine :initial => 'checkout' do
     # With card payments, happens before purchase or authorization happens

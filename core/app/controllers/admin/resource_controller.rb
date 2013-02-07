@@ -8,14 +8,14 @@ class Admin::ResourceController < Admin::BaseController
 
   def new
     invoke_callbacks(:new_action, :before)
-    respond_with(@object) do |format|
+    respond_to do |format|
       format.html { render :layout => !request.xhr? }
       format.js { render :layout => false }
     end
   end
 
   def edit
-    respond_with(@object) do |format|
+    respond_to do |format|
       format.html { render :layout => !request.xhr? }
       format.js { render :layout => false }
     end
@@ -26,13 +26,12 @@ class Admin::ResourceController < Admin::BaseController
     if @object.update_attributes(params[object_name])
       invoke_callbacks(:update, :after)
       flash[:notice] = flash_message_for(@object, :successfully_updated)
-      respond_with(@object) do |format|
+      respond_to do |format|
         format.html { redirect_to location_after_save }
         format.js   { render :layout => false }
       end
     else
       invoke_callbacks(:update, :fails)
-      respond_with(@object)
     end
   end
 
@@ -41,13 +40,13 @@ class Admin::ResourceController < Admin::BaseController
     if @object.save
       invoke_callbacks(:create, :after)
       flash[:notice] = flash_message_for(@object, :successfully_created)
-      respond_with(@object) do |format|
+      respond_to do |format|
         format.html { redirect_to location_after_save }
         format.js   { render :layout => false }
       end
     else
+      render :edit
       invoke_callbacks(:create, :fails)
-      respond_with(@object)
     end
   end
 
@@ -56,13 +55,13 @@ class Admin::ResourceController < Admin::BaseController
     if @object.destroy
       invoke_callbacks(:destroy, :after)
       flash[:notice] = flash_message_for(@object, :successfully_removed)
-      respond_with(@object) do |format|
+      respond_to do |format|
         format.html { redirect_to collection_url }
         format.js   { render :partial => "/admin/shared/destroy" }
       end
     else
       invoke_callbacks(:destroy, :fails)
-      respond_with(@object) do |format|
+      respond_to do |format|
         format.html { redirect_to collection_url }
       end
     end

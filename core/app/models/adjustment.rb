@@ -36,6 +36,8 @@ class Adjustment < ActiveRecord::Base
   after_save { order.update! }
   after_destroy { order.update! }
 
+  attr_accessible :order, :amount, :label, :source, :originator, :mandatory
+
   # Update the boolean _eligible_ attribute which deterimes which adjustments count towards the order's
   # adjustment_total.
   def set_eligibility

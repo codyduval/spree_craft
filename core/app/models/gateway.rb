@@ -6,6 +6,8 @@ class Gateway < PaymentMethod
   preference :server, :string, :default => 'test'
   preference :test_mode, :boolean, :default => true
 
+  attr_protected #none
+
   def payment_source_class
     Creditcard
   end

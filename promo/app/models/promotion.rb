@@ -2,6 +2,8 @@ class Promotion < Activator
 
   MATCH_POLICIES = %w(all any)
 
+  attr_accessible :name
+
   preference :usage_limit, :integer
   preference :match_policy, :string, :default => MATCH_POLICIES.first
   preference :advertise, :boolean, :default => false

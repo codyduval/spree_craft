@@ -33,8 +33,8 @@ describe TaxRate do
   end
 
   context "default" do
-    let(:category) { Factory :tax_category, :tax_rates => [] }
-    let(:rate) { Factory :tax_rate, :amount => 0.1, :tax_category => category}
+    let(:category) { FactoryGirl.create :tax_category, :tax_rates => [] }
+    let(:rate) { FactoryGirl.create :tax_rate, :amount => 0.1, :tax_category => category}
 
     it "should return zero with no default category" do
       TaxCategory.any_instance.should_not_receive(:effective_amount)

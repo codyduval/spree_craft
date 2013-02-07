@@ -26,8 +26,8 @@ describe TaxCategory do
   end 
  
   context 'effective_amount' do
-    let(:rate) { Factory :tax_rate, :amount => 0.1}
-    let(:category) { Factory :tax_category, :tax_rates => [rate] }
+    let(:rate) { FactoryGirl.create :tax_rate, :amount => 0.1}
+    let(:category) { FactoryGirl.create :tax_category, :tax_rates => [rate] }
 
     it "should return nil when default_country is not included in zone" do
       rate.zone.stub(:include? => false)

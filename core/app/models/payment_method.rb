@@ -2,6 +2,8 @@ class PaymentMethod < ActiveRecord::Base
   DISPLAY =  [:both, :front_end, :back_end]
   default_scope where(:deleted_at => nil)
 
+  attr_accessible :type, :name, :display_on, :active, :environment, :description
+
   def self.providers
     Rails.application.config.spree.payment_methods
   end

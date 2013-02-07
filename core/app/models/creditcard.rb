@@ -5,6 +5,7 @@ class Creditcard < ActiveRecord::Base
   after_validation :set_card_type
 
   attr_accessor :number, :verification_value
+  attr_accessible :gateway_customer_profile_id, :number, :verification_value, :month, :year
 
   validates :month, :year, :unless => :has_payment_profile?, :numericality => { :only_integer => true }
   validates :number, :presence => true, :unless => :has_payment_profile?, :on => :create

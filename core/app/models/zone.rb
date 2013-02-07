@@ -6,6 +6,8 @@ class Zone < ActiveRecord::Base
   validates :name, :presence => true, :uniqueness => true
   after_save :remove_defunct_members
 
+  attr_accessible :zoneable, :zone
+
   alias :members :zone_members
   accepts_nested_attributes_for :zone_members, :allow_destroy => true, :reject_if => proc { |a| a['zoneable_id'].blank? }
 

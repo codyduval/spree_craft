@@ -14,7 +14,7 @@ class LineItem < ActiveRecord::Base
   
   # validate :meta_validation_of_quantities
 
-  attr_accessible :quantity
+  attr_accessible :quantity, :variant, :quantity
 
   before_save :update_inventory
   before_destroy :ensure_not_shipped, :remove_inventory
