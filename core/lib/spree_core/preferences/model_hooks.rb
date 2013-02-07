@@ -281,7 +281,7 @@ module Spree
                 if preference.nil?
                   attribute = attributes.delete(:attribute)
                   preference = stored_preferences.build(attributes)
-                  preference['attribute'] = attribute
+                  preference.attribute = attribute
                 end
                 preference.value = value
                 preference.save!

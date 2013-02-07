@@ -9,7 +9,7 @@ class Order < ActiveRecord::Base
   belongs_to :ship_address, :foreign_key => "ship_address_id", :class_name => "Address"
   belongs_to :shipping_method
 
-  has_many :state_events, :as => :stateful
+  has_many :state_change_logs, :as => :stateful
   has_many :line_items, :dependent => :destroy
   has_many :inventory_units
   has_many :payments, :dependent => :destroy
@@ -155,8 +155,8 @@ class Order < ActiveRecord::Base
 
   def restore_state
     # pop the resume event so we can see what the event before that was
-    state_events.pop if state_events.last.name == "resume"
-    update_attribute("state", state_events.last.previous_state)
+    state_change_logs.pop ifstate_change_logs.last.name == "resume"
+    update_attribute("state", state_change_logs.last.previous_state)
 
     if paid?
       raise "do something with inventory"
@@ -188,7 +188,7 @@ class Order < ActiveRecord::Base
 
   def allow_resume?
     # we shouldn't allow resume for legacy orders b/c we lack the information necessary to restore to a previous state
-    return false if state_events.empty? || state_events.last.previous_state.nil?
+    return false if state_change_logs.empty? || state_change_logs.last.previous_state.nil?
     true
   end
 
@@ -309,7 +309,7 @@ class Order < ActiveRecord::Base
     adjustments.optional.each { |adjustment| adjustment.update_attribute("locked", true) }
     OrderMailer.confirm_email(self).deliver
 
-    self.state_events.create({
+    self.state_change_logs.create({
       :previous_state => "cart",
       :next_state     => "complete",
       :name           => "order" ,
@@ -401,7 +401,7 @@ class Order < ActiveRecord::Base
     self.shipment_state = "backorder" if backordered?
 
     if old_shipment_state = self.changed_attributes["shipment_state"]
-      self.state_events.create({
+      self.state_change_logs.create({
         :previous_state => old_shipment_state,
         :next_state     => self.shipment_state,
         :name           => "shipment" ,
@@ -430,7 +430,7 @@ class Order < ActiveRecord::Base
     end
 
     if old_payment_state = self.changed_attributes["payment_state"]
-      self.state_events.create({
+      self.state_change_logs.create({
         :previous_state => old_payment_state,
         :next_state     => self.payment_state,
         :name           => "payment",
