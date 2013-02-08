@@ -5,7 +5,7 @@ class Admin::PrototypesController < Admin::ResourceController
 
   def available
     @prototypes = Prototype.order('name asc')
-    respond_with(@prototypes) do |format|
+    respond_to do |format|
       format.html { render :layout => !request.xhr? }
       format.js
     end
@@ -15,7 +15,6 @@ class Admin::PrototypesController < Admin::ResourceController
     @prototype ||= Prototype.find(params[:id])
     @prototype_properties = @prototype.properties
 
-    respond_with(@prototypes)
   end
 
   private

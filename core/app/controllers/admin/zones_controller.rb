@@ -3,7 +3,6 @@ class Admin::ZonesController < Admin::ResourceController
 
   def new
     @zone.zone_members.build
-    respond_with(@zone)
   end
 
   protected

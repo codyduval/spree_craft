@@ -7,13 +7,10 @@ class Admin::PaymentsController < Admin::BaseController
 
   def index
     @payments = @order.payments
-
-    respond_with(@payments)
   end
 
   def new
     @payment = @order.payments.build
-    respond_with(@payment)
   end
 
   def create
@@ -24,7 +21,7 @@ class Admin::PaymentsController < Admin::BaseController
 
     begin
       unless @payment.save
-        respond_with(@payment) { |format| format.html { redirect_to admin_order_payments_path(@order) } }
+        respond_to { |format| format.html { redirect_to admin_order_payments_path(@order) } }
         return
       end
 
@@ -32,20 +29,20 @@ class Admin::PaymentsController < Admin::BaseController
         @payment.process!
         flash[:notice] = flash_message_for(@payment, :successfully_created)
 
-        respond_with(@payment) { |format| format.html { redirect_to admin_order_payments_path(@order) } }
+        respond_to { |format| format.html { redirect_to admin_order_payments_path(@order) } }
       else
         #This is the first payment (admin created order)
         until @order.completed?
           @order.next!
         end
         flash.notice = t('new_order_completed')
-        respond_with(@payment) { |format| format.html { redirect_to admin_order_url(@order) } }
+        respond_to { |format| format.html { redirect_to admin_order_url(@order) } }
       end
 
     rescue Spree::GatewayError => e
       flash[:error] = "#{e.message}"
       
-      respond_with(@payment) { |format| format.html { redirect_to new_admin_payment_path(@order) } }
+      respond_to { |format| format.html { redirect_to new_admin_payment_path(@order) } }
     end
   end
 
@@ -60,7 +57,7 @@ class Admin::PaymentsController < Admin::BaseController
   rescue Spree::GatewayError => ge
     flash[:error] = "#{ge.message}"
   ensure
-    respond_with(@payment) { |format| format.html { redirect_to admin_order_payments_path(@order) } }
+    respond_to { |format| format.html { redirect_to admin_order_payments_path(@order) } }
   end
 
   private

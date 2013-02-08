@@ -10,10 +10,6 @@ describe Admin::OrdersController do
   let(:order) { FactoryGirl.create(:order) }
   before do
     Order.stub :find_by_number => order
-    #ensure no respond_overrides are in effect
-    if Spree::BaseController.spree_responders[:OrdersController].present?
-      Spree::BaseController.spree_responders[:OrdersController].clear
-    end
   end
 
   context "#authorize_admin" do

@@ -10,8 +10,6 @@ class TaxonsController < Spree::BaseController
 
     @searcher = Spree::Config.searcher_class.new(params.merge(:taxon => @taxon.id))
     @products = @searcher.retrieve_products
-
-    respond_with(@taxon)
   end
 
   private

@@ -3,8 +3,6 @@ class Admin::TaxonomiesController < Admin::ResourceController
 
   def get_children
     @taxons = Taxon.find(params[:parent_id]).children
-
-    respond_with(@taxons)
   end
 
   private

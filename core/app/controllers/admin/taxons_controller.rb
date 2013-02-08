@@ -7,12 +7,12 @@ class Admin::TaxonsController < Admin::BaseController
     @taxonomy = Taxonomy.find(params[:taxonomy_id])
     @taxon = @taxonomy.taxons.build(params[:taxon])
     if @taxon.save
-      respond_with(@taxon) do |format|
+      respond_to do |format|
         format.json {render :json => @taxon.to_json }
       end
     else
       flash[:error] = I18n.t('errors.messages.could_not_create_taxon')
-      respond_with(@taxon) do |format|
+      respond_to do |format|
         format.html { redirect_to @taxonomy ? edit_admin_taxonomy_url(@taxonomy) : admin_taxonomies_url }
       end
     end
@@ -22,8 +22,6 @@ class Admin::TaxonsController < Admin::BaseController
     @taxonomy = Taxonomy.find(params[:taxonomy_id])
     @taxon = @taxonomy.taxons.find(params[:id])
     @permalink_part = @taxon.permalink.split("/").last
-
-    respond_with(:admin, @taxon) 
   end
 
   def update
@@ -88,7 +86,7 @@ class Admin::TaxonsController < Admin::BaseController
       end
     end
     
-    respond_with(@taxon) do |format|
+    respond_to do |format|
       format.html {redirect_to edit_admin_taxonomy_url(@taxonomy) }
       format.json {render :json => @taxon.to_json }
     end
@@ -97,22 +95,18 @@ class Admin::TaxonsController < Admin::BaseController
   def destroy
     @taxon = Taxon.find(params[:id])
     @taxon.destroy
-    respond_with(@taxon) { |format| format.json { render :json => '' } }
+    respond_to { |format| format.json { render :json => '' } }
   end
 
   def selected
     @product = load_product
     @taxons = @product.taxons
-
-    respond_with(:admin, @taxons)
   end
 
   def available
     @product = load_product
     @taxons = params[:q].blank? ? [] : Taxon.where('lower(name) LIKE ?', "%#{params[:q].mb_chars.downcase}%")
     @taxons.delete_if { |taxon| @product.taxons.include?(taxon) }
-
-    respond_with(:admin, @taxons)
   end
 
   def remove
@@ -122,7 +116,7 @@ class Admin::TaxonsController < Admin::BaseController
     @product.save
     @taxons = @product.taxons
 
-    respond_with(@taxon) { |format| format.js { render_js_for_destroy } }
+    respond_to { |format| format.js { render_js_for_destroy } }
   end
 
   def select
@@ -131,8 +125,6 @@ class Admin::TaxonsController < Admin::BaseController
     @product.taxons << @taxon
     @product.save
     @taxons = @product.taxons
-
-    respond_with(:admin, @taxons)
   end
 
   def batch_select

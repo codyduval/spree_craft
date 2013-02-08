@@ -7,7 +7,6 @@ class Admin::ShipmentsController < Admin::BaseController
 
   def index
     @shipments = @order.shipments
-    respond_with(@shipments)
   end
 
   def new
@@ -15,7 +14,6 @@ class Admin::ShipmentsController < Admin::BaseController
     @shipment.address ||= @order.ship_address
     @shipment.address ||= Address.new(:country_id => Spree::Config[:default_country_id])
     @shipment.shipping_method = @order.shipping_method
-    respond_with(@shipment)
   end
 
   def create
@@ -23,17 +21,16 @@ class Admin::ShipmentsController < Admin::BaseController
     assign_inventory_units
     if @shipment.save
       flash[:notice] = flash_message_for(@shipment, :successfully_created)
-      respond_with(@shipment) do |format|
+      respond_to do |format|
         format.html { redirect_to edit_admin_order_shipment_path(@order, @shipment) }
       end
     else
-      respond_with(@shipment) { |format| format.html { render :action => 'new' } }
+      respond_to { |format| format.html { render :action => 'new' } }
     end
   end
 
   def edit
     @shipment.special_instructions = @order.special_instructions
-    respond_with(@shipment)
   end
 
   def update
@@ -46,17 +43,17 @@ class Admin::ShipmentsController < Admin::BaseController
 
       flash[:notice] = flash_message_for(@shipment, :successfully_updated)
       return_path = @order.completed? ? edit_admin_order_shipment_path(@order, @shipment) : admin_order_adjustments_path(@order)
-      respond_with(@object) do |format|
+      respond_to do |format|
         format.html { redirect_to return_path }
       end
     else
-      respond_with(@shipment) { |format| format.html { render :action => 'edit' } }
+      respond_to { |format| format.html { render :action => 'edit' } }
     end
   end
 
   def destroy
     @shipment.destroy
-    respond_with(@shipment) { |format| format.js { render_js_for_destroy } }
+    respond_to { |format| format.js { render_js_for_destroy } }
   end
 
   def fire
@@ -66,7 +63,7 @@ class Admin::ShipmentsController < Admin::BaseController
       flash[:error] = t('cannot_perform_operation')
     end
 
-    respond_with(@shipment) { |format| format.html { redirect_to :back } }
+    respond_to { |format| format.html { redirect_to :back } }
   end
 
   private

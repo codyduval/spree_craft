@@ -4,7 +4,7 @@ class Admin::VariantsController < Admin::ResourceController
   new_action.before :new_before
 
   def index
-    respond_with(collection) do |format|
+    respond_to do |format|
       format.html
       format.json { render :json => json_data }
     end
@@ -22,7 +22,7 @@ class Admin::VariantsController < Admin::ResourceController
       flash.notice = I18n.t("notice_messages.variant_not_deleted")
     end
 
-    respond_with(@variant) do |format|
+    respond_to do |format|
       format.html { redirect_to admin_product_variants_url(params[:product_id]) }
       format.js  { render_js_for_destroy }
     end
@@ -33,7 +33,7 @@ class Admin::VariantsController < Admin::ResourceController
       Variant.update_all(['position=?', index], ['id=?', id])
     end
 
-    respond_with(@variant) do |format|
+    respond_to do |format|
       format.html { redirect_to admin_product_variants_url(params[:product_id]) }
       format.js  { render :text => 'Ok' }
     end

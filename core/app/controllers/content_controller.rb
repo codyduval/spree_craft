@@ -8,13 +8,13 @@ class ContentController < Spree::BaseController
   respond_to :html
 
   def show
-    respond_with do |format|
+    respond_to do |format|
       format.html { render :action => params[:path] }
     end
   end
 
   def cvv
-    respond_with do |format|
+    respond_to do |format|
       format.html {  render "cvv", :layout => false }
     end
   end

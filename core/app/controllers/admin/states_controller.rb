@@ -3,7 +3,7 @@ class Admin::StatesController < Admin::ResourceController
   before_filter :load_data
 
   def index
-    respond_with(@collection) do |format|
+    respond_to do |format|
       format.html
       format.js { render :partial => 'state_list' }
     end
