@@ -1,8 +1,6 @@
 $(document).ready(function(){
 
-  $("#add_product_name").product_autocomplete();
-
-  $("#add_line_item_to_order").live("click", function(){
+  $(document).on("click", "#add_line_item_to_order", function(){
     if($('#add_variant_id').val() == ''){ return false; }
     update_target = $(this).attr("data-update");
     $.ajax({ dataType: 'script', url: this.href, type: "POST",

@@ -40,47 +40,6 @@ $(document).ready(function(){
     });
   }
 
-  $("#customer_search").autocomplete("/admin/users.json?authenticity_token=" + encodeURIComponent($('meta[name=csrf-token]').attr("content")), {
-    minChars: 5,
-    delay: 1500,
-    parse: prep_user_autocomplete_data,
-    formatItem: function(item) {
-      return format_user_autocomplete(item);
-    }
-  }).result(function(event, data, formatted) {
-    $('#user_id').val(data['id']);
-    $('#guest_checkout_true').prop("checked", false);
-    $('#guest_checkout_false').prop("checked", true);
-    $('#guest_checkout_false').prop("disabled", false);
-    $('#order_email').val(data['email']);
-
-    var addr = data['bill_address'];
-    if(addr!=undefined){
-      $('#order_bill_address_attributes_firstname').val(addr['firstname']);
-      $('#order_bill_address_attributes_lastname').val(addr['lastname']);
-      $('#order_bill_address_attributes_address1').val(addr['address1']);
-      $('#order_bill_address_attributes_address2').val(addr['address2']);
-      $('#order_bill_address_attributes_city').val(addr['city']);
-      $('#order_bill_address_attributes_zipcode').val(addr['zipcode']);
-      $('#order_bill_address_attributes_state_id').val(addr['state_id']);
-      $('#order_bill_address_attributes_country_id').val(addr['country_id']);
-      $('#order_bill_address_attributes_phone').val(addr['phone']);
-    }
-
-    var addr = data['ship_address'];
-    if(addr!=undefined){
-      $('#order_ship_address_attributes_firstname').val(addr['firstname']);
-      $('#order_ship_address_attributes_lastname').val(addr['lastname']);
-      $('#order_ship_address_attributes_address1').val(addr['address1']);
-      $('#order_ship_address_attributes_address2').val(addr['address2']);
-      $('#order_ship_address_attributes_city').val(addr['city']);
-      $('#order_ship_address_attributes_zipcode').val(addr['zipcode']);
-      $('#order_ship_address_attributes_state_id').val(addr['state_id']);
-      $('#order_ship_address_attributes_country_id').val(addr['country_id']);
-      $('#order_ship_address_attributes_phone').val(addr['phone']);
-    }
-  });
-
 
   $('input#order_use_billing').click(function() {
     show_billing(!$(this).is(':checked'));
