@@ -1,6 +1,7 @@
 class Address < ActiveRecord::Base
 
-  attr_accessible :country_id
+  attr_accessible :firstname, :lastname, :company, :address1, :address2,
+    :city, :state_id, :zipcode, :phone, :gift_email, :state_name, :country_id
 
   belongs_to :country
   belongs_to :state

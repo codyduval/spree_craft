@@ -1,6 +1,8 @@
 class Creditcard < ActiveRecord::Base
   has_many :payments, :as => :source
 
+  attr_accessible :address, :first_name, :last_name
+
   before_save :set_last_digits
   after_validation :set_card_type
 
