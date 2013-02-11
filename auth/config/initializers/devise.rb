@@ -34,13 +34,17 @@ Devise.setup do |config|
   # The realm used in Http Basic Authentication
   config.http_authentication_realm = "Spree Application"
 
+  config.reset_password_within = 24.hours
+
   # ==> Configuration for :database_authenticatable
   # For bcrypt, this is the cost for hashing the password and defaults to 10. If
   # using other encryptors, it sets how many times you want the password re-encrypted.
   config.stretches = 20
 
+  config.password_length = 6..128
+
   # Setup a pepper to generate the encrypted password.
-  config.pepper = "0bfa9e2cb4a5efd0d976518a3d82e345060547913d2fd1dd2f32b0c8dbbbb5d3dc20b86d0fed31aca9513bccdf51643700ea277d9c64d9ce8ef886bf39293453"
+  config.pepper = "d976518a3d82e345060547913d2fd1dd2f32b0c8dbbbb5d3dc20b86d0fed31aca9513bccdf51643700ea277d9c64d9ce8ef886bf39293453"
 
   # ==> Configuration for :confirmable
   # The time you want to give your user to confirm his account. During this time

@@ -3,6 +3,7 @@ require 'spec_helper'
 describe UserSessionsController do
   before(:each) do
     request.env["rack.url_scheme"] = "https"
+    request.env["devise.mapping"] = Devise.mappings[:user]
   end
 
   context "#create" do

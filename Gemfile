@@ -25,3 +25,5 @@ else
 end
 
 gemspec
+
+gem 'devise-encryptable'

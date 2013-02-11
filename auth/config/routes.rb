@@ -5,6 +5,7 @@ Rails.application.routes.draw do
                                :passwords => "user_passwords" },
              :skip => [:unlocks, :omniauth_callbacks],
              :path_names => { :sign_out => 'logout'}
+
   resources :users, :only => [:edit, :update]
 
   devise_scope :user do
