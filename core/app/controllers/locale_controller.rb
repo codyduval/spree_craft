@@ -9,6 +9,6 @@ class LocaleController < Spree::BaseController
     else
       flash[:error] = t(:locale_not_changed)
     end
-    redirect_back_or_default(root_path)
+    redirect_back_or_default(root_path(:protocol => "http"))
   end
 end

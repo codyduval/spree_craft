@@ -20,7 +20,7 @@ class UserSessionsController < Devise::SessionsController
       respond_to do |format|
         format.html {
           flash[:notice] = I18n.t("logged_in_succesfully")
-          redirect_back_or_default(products_path)
+          redirect_back_or_default(products_path(:protocol => "http"))
         }
         format.js {
           user = resource.record

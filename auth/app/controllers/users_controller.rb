@@ -15,7 +15,7 @@ class UsersController < Spree::BaseController
         session[:guest_token] = nil
       end
 
-      redirect_back_or_default(root_url)
+      redirect_back_or_default(root_url(:protocol => "http"))
     else
       render 'new'
     end
