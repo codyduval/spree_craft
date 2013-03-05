@@ -1,5 +1,5 @@
 class Admin::BaseController < Spree::BaseController
-  force_ssl
+  ssl_required
 
   before_filter :check_alerts if Rails.env.production?
 

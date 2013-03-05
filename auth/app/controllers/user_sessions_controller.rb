@@ -1,12 +1,13 @@
 class UserSessionsController < Devise::SessionsController
   include SpreeBase
+  include ::SslRequirement
   helper :users, 'spree/base'
 
   include Spree::CurrentOrder
 
   after_filter :associate_user, :only => :create
 
-  force_ssl :only => [:new, :create, :destroy, :update, :login_bar]
+  ssl_required :new, :create, :destroy, :update, :login_bar
 
   # GET /resource/sign_in
   def new

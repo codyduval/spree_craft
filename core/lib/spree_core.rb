@@ -39,7 +39,7 @@ require 'active_merchant'
 require 'meta_search'
 require 'find_by_param'
 require 'jquery-rails'
-
+require 'ssl_requirement'
 require 'spree_core/ext/active_record'
 require 'spree_core/ext/hash'
 
