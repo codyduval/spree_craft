@@ -3,7 +3,7 @@ class UserRegistrationsController < Devise::RegistrationsController
   include ::SslRequirement
   helper :users, 'spree/base'
 
-  ssl_required
+  ssl_required :all
   after_filter :associate_user, :only => :create
   before_filter :check_permissions, :only => [:edit, :update]
   skip_before_filter :require_no_authentication
