@@ -2,6 +2,8 @@ class UsersController < Spree::BaseController
   prepend_before_filter :load_object, :only => [:show, :edit, :update]
   prepend_before_filter :authorize_actions, :only => :new
 
+  ssl_required :all
+
   def show
     @orders = @user.orders.complete
   end
