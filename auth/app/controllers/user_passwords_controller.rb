@@ -21,7 +21,7 @@ class UserPasswordsController < Devise::PasswordsController
 
     if resource.errors.empty?
       set_flash_message(:notice, :send_instructions) if is_navigational_format?
-      redirect_to resource, :location => new_session_path(resource_name)
+      redirect_to root_url
     else
       render :new 
     end
