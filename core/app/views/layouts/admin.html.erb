@@ -12,7 +12,17 @@
 
   <div id="header" data-hook>
 
-    <div data-hook="admin_login_navigation_bar"></div>
+    <div>
+    <% if current_user %>
+      <ul id="login-nav">
+        <li><%= t(:logged_in_as) %>: <%= current_user.email %></li>
+        <li><%= link_to t(:account), edit_user_path(current_user) %></li>
+        <li><%= link_to t(:logout), destroy_user_session_path %></li>
+        <li><%= link_to t(:store), products_path %></li>
+      </ul>
+    <% end %>
+    </div>
+
 
     <%= link_to image_tag(Spree::Config[:admin_interface_logo], :id => 'logo'), admin_path %>
     <h1><%= link_to t(:administration), admin_path %></h1>

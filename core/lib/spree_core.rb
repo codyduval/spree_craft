@@ -46,7 +46,6 @@ require 'spree_core/ext/hash'
 require 'spree_core/delegate_belongs_to'
 ActiveRecord::Base.send :include, DelegateBelongsTo
 
-require 'spree_core/theme_support'
 require 'spree_core/enumerable_constants'
 
 require 'spree_core/spree_custom_responder'
