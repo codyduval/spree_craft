@@ -484,7 +484,7 @@ class Order < ActiveRecord::Base
   end
 
   def has_shipping_method
-    errors.add(:base, 'You must select a shipping method.') if !shipping_method.any?
+    errors.add(:base, 'You must select a shipping method.') if shipping_method.nil?
   end
 
   def after_cancel
