@@ -30,7 +30,7 @@ class Order < ActiveRecord::Base
   # TODO: validate the format of the email as well (but we can't rely on authlogic anymore to help with validation)
   validates :email, :presence => true, :format => /^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i, :if => :require_email
   validate :has_available_shipment
-  validate :has_shipping_method, :if => :delivery_required?
+  #validate :has_shipping_method, :if => :delivery_required?
 
   #delegate :ip_address, :to => :checkout
   def ip_address
