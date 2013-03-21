@@ -3,7 +3,7 @@
 class PromotionAction < ActiveRecord::Base
   belongs_to :promotion, :foreign_key => 'activator_id'
 
-  attr_protected #none
+  attr_accessible :type
 
   scope :of_type, lambda {|t| {:conditions => {:type => t}}}
 
