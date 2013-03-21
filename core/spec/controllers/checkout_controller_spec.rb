@@ -12,7 +12,7 @@ describe CheckoutController do
 
   it "should understand checkout routes" do
     assert_routing("/checkout/delivery", {:controller => "checkout", :action => "edit", :state => "delivery"})
-    assert_routing("/checkout/update/delivery", {:controller => "checkout", :action => "update", :state => "delivery"})
+    assert_routing({ :method => 'put', :path => "/checkout/delivery" }, {:controller => "checkout", :action => "update", :state => "delivery"})
   end
 
   context "#edit" do
