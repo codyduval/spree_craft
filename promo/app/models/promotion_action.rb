@@ -15,5 +15,11 @@ class PromotionAction < ActiveRecord::Base
     raise 'perform should be implemented in a sub-class of PromotionAction'
   end
 
+  private
+
+  def attributes_protected_by_default
+    super - [self.class.inheritance_column]
+  end
+
 end
 

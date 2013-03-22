@@ -10,4 +10,9 @@ class PromotionRule < ActiveRecord::Base
     raise 'eligible? should be implemented in a sub-class of Promotion::PromotionRule'
   end
 
+  private
+
+  def attributes_protected_by_default
+    super - [self.class.inheritance_column]
+  end
 end
