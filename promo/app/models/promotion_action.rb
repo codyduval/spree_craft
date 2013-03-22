@@ -17,8 +17,8 @@ class PromotionAction < ActiveRecord::Base
 
   private
 
-  def attributes_protected_by_default
-    super - [self.class.inheritance_column]
+  def self.attributes_protected_by_default
+    super - ['type']
   end
 
 end
