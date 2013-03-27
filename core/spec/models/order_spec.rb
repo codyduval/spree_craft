@@ -8,11 +8,16 @@ describe Order do
 
   let(:order) { FactoryGirl.create(:order) }
   let(:gateway) { Gateway::Bogus.new(:name => "Credit Card", :active => true) }
+  let(:mail_method) { mock("mail_method", :preferred_mails_from => 'example@example.com', :preferred_intercept_email => nil, :preferred_mail_bcc => nil) }
+
 
   before do
     Gateway.stub :current => gateway
     User.stub(:current => mock_model(User, :id => 123))
+    ActionMailer::Base.delivery_method = :test
+    MailMethod.stub :current => mail_method
   end
+  after { ActionMailer::Base.deliveries.clear }
 
   context "factory" do
     it "should change the Orders count by 1 after factory has been executed" do
@@ -95,7 +100,7 @@ describe Order do
   end
 
   context "#finalize!" do
-    let(:order) { Order.create }
+    let(:order) { Order.create(:email => 'example@example.com') }
     it "should set completed_at" do
       order.should_receive :completed_at=
       order.finalize!

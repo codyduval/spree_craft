@@ -18,12 +18,6 @@ group :test do
   gem "shoulda-matchers"
 end
 
-if RUBY_VERSION < "1.9"
-  gem "ruby-debug"
-else
-  gem "ruby-debug19"
-end
-
 gemspec
 
 gem 'devise-encryptable'
