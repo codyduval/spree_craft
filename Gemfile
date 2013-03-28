@@ -1,5 +1,7 @@
 source 'http://rubygems.org'
 
+ruby '2.0.0'
+
 gem 'json'
 gem 'sqlite3'
 # Gems used only for assets and not required
