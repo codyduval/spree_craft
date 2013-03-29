@@ -14,10 +14,10 @@ Rails.application.routes.draw do
   end
 
 
-  match '/checkout/registration' => 'checkout#registration', :via => :get, :as => :checkout_registration
-  match '/checkout/registration' => 'checkout#update_registration', :via => :put, :as => :update_checkout_registration
+  get '/checkout/registration' => 'checkout#registration', :as => :checkout_registration
+  put '/checkout/registration' => 'checkout#update_registration', :as => :update_checkout_registration
 
-  match '/orders/:id/token/:token' => 'orders#show', :via => :get, :as => :token_order
+  get '/orders/:id/token/:token' => 'orders#show', :as => :token_order
 
   resource :session do
     member do

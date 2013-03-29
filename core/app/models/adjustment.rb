@@ -28,10 +28,10 @@ class Adjustment < ActiveRecord::Base
   validates :label, :presence => true
   validates :amount, :numericality => true
 
-  scope :tax, lambda { where(:originator_type => "TaxRate") }
-  scope :shipping, lambda { where(:label => I18n.t(:shipping)) }
-  scope :optional, where(:mandatory => false)
-  scope :eligible, where(:eligible => true)
+  scope :tax,      -> { where(:originator_type => "TaxRate") }
+  scope :shipping, -> { where(:label => I18n.t(:shipping)) }
+  scope :optional, -> { where(:mandatory => false) }
+  scope :eligible, -> { where(:eligible => true) }
 
   after_save { order.update! }
   after_destroy { order.update! }

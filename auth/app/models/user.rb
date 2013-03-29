@@ -14,8 +14,8 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :persistence_token
 
-  scope :admin, lambda { includes(:roles).where("roles.name" => "admin") }
-  scope :registered, where("users.email NOT LIKE ?", "%@example.net")
+  scope :admin, -> { includes(:roles).where("roles.name" => "admin") }
+  scope :registered, -> { where("users.email NOT LIKE ?", "%@example.net") }
 
   # has_role? simply needs to return true or false whether a user has a role or not.
   def has_role?(role_in_question)
@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
 
   def check_admin
     return if self.class.admin_created?
-    admin_role = Role.find_or_create_by_name "admin"
+    admin_role = Role.find_or_create_by(name: "admin")
     self.roles << admin_role
   end
 
@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
   def self.generate_token(column)
     loop do
       token = friendly_token
-      break token unless find(:first, :conditions => { column => token })
+      break token unless self.where({column => token }).first
     end
   end
 

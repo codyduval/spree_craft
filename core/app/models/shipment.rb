@@ -18,11 +18,12 @@ class Shipment < ActiveRecord::Base
   validates :inventory_units, :presence => true, :if => :require_inventory
   validates :shipping_method, :presence => true
 
-  make_permalink :field => :number
+  include FriendlyId
+  friendly_id :number
 
-  scope :shipped, where(:state => 'shipped')
-  scope :ready, where(:state => 'ready')
-  scope :pending, where(:state => 'pending')
+  scope :shipped, -> { where(:state => 'shipped') }
+  scope :ready, -> { where(:state => 'ready') }
+  scope :pending, -> { where(:state => 'pending') }
 
   def to_param
     self.number if self.number
@@ -92,7 +93,7 @@ class Shipment < ActiveRecord::Base
     record = true
     while record
       random = "H" + Array.new(11){rand(9)}.join
-      record = Shipment.find(:first, :conditions => ["number = ?", random])
+      record = Shipment.where(:number => random).first
     end
     self.number = random
   end

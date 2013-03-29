@@ -25,7 +25,7 @@ describe UsersController do
 
       it "should assign the user to the order" do
         order.should_receive(:associate_user!)
-        post :create, {:user => {:email => "foobar@spreecommerce.com", :password => "foobar123", :password_confirmation => "foobar123"} }
+        post :create, :user => {:email => "foobar@spreecommerce.com", :password => "foobar123", :password_confirmation => "foobar123"} 
       end
     end
   end
@@ -41,8 +41,8 @@ describe UsersController do
     end
 
     context "when attempting to update other account" do
-      it "should not allow update" do
-        put :update, {:user => FactoryGirl.create(:user)}, {:user => {:email => "mynew@email-address.com" } }
+      pending "should not allow update" do
+        put :update, {:user => {:email => "not-me@email-address.com" } }
         response.should redirect_to(login_url)
       end
     end

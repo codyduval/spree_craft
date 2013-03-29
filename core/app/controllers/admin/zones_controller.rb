@@ -10,8 +10,8 @@ class Admin::ZonesController < Admin::ResourceController
   def collection
     params[:search] ||= {}
     params[:search][:meta_sort] ||= "ascend_by_name"
-    @search = super.metasearch(params[:search])
-    @zones = @search.relation.page(params[:page]).per(Spree::Config[:orders_per_page])
+    @search = super.search(params[:search])
+    @zones = @search.result(:distinct => true).page(params[:page]).per(Spree::Config[:orders_per_page])
   end
 
   def load_data

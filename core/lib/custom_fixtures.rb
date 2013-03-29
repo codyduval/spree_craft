@@ -1,7 +1,7 @@
 require 'active_record/fixtures'
 
 module Spree
-  class Fixtures < ActiveRecord::Fixtures
+  class Fixtures < ActiveRecord::FixtureSet
     # Replace this method to prevent the table being emptied on each call. Needed
     # when both core & auth have user fixtures, see below for code commented out.
     #
@@ -25,7 +25,7 @@ module Spree
           fixture_files = files_to_read.map do |path|
             table_name = path.tr '/', '_'
 
-            fixtures_map[path] = ActiveRecord::Fixtures.new(
+            fixtures_map[path] = ActiveRecord::FixtureSet.new(
               connection,
               table_name,
               class_names[table_name.to_sym] || table_name.classify,

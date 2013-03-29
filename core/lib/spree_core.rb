@@ -36,12 +36,15 @@ require 'nested_set'
 require 'acts_as_list'
 require 'resource_controller'
 require 'active_merchant'
-require 'meta_search'
-require 'find_by_param'
+require 'ransack'
+require 'friendly_id'
 require 'jquery-rails'
 require 'ssl_requirement'
 require 'spree_core/ext/active_record'
 require 'spree_core/ext/hash'
+require 'protected_attributes'
+require 'action_controller/page_caching'
+require 'action_controller/action_caching'
 
 require 'spree_core/delegate_belongs_to'
 ActiveRecord::Base.send :include, DelegateBelongsTo
@@ -90,4 +93,10 @@ end
 
 ActiveSupport.on_load(:action_view) do
   include StoreHelpers
+end
+
+ActiveSupport.on_load(:action_controller) do
+  include ActionController::Caching
+  include ActionController::Caching::Pages
+  include ActionController::Caching::Actions
 end

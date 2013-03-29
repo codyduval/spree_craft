@@ -20,8 +20,8 @@ class Admin::ProductGroupsController < Admin::ResourceController
     def collection
       params[:search] ||= {}
       params[:search][:meta_sort] ||= "name.asc"
-      @search = super.metasearch(params[:search])
-      @collection = @search.relation.page(params[:page]).per(Spree::Config[:per_page])
+      @search = super.search(params[:search])
+      @collection = @search.result(:distinct => true).page(params[:page]).per(Spree::Config[:per_page])
     end
     
   private

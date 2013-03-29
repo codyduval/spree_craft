@@ -7,13 +7,13 @@ gem 'sqlite3'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
+  gem 'sass-rails', :github => 'rails/sass-rails'
+  gem 'coffee-rails', :github => 'rails/coffee-rails'
   gem 'uglifier'
 end
 
 group :test do
-  gem "rspec-rails", "~> 2.12.2"
+  gem "rspec-rails", :github => 'rspec/rspec-rails'
   gem 'factory_girl_rails', '~> 1.7.0'
   gem 'faker'
   gem 'pry'
@@ -23,3 +23,8 @@ end
 gemspec
 
 gem 'devise-encryptable'
+gem 'devise', :github => 'plataformatec/devise', :branch => 'rails4'
+gem 'ransack', :github => 'avit/ransack', :branch => 'rails4-dependencies'
+gem 'actionpack-page_caching', :github => 'rails/actionpack-page_caching' # TODO: refactor and remove
+gem 'actionpack-action_caching', :github => 'rails/actionpack-action_caching'  # TODO: refactor and remove
+gem 'friendly_id', :github => 'norman/friendly_id', :branch => 'rails4'

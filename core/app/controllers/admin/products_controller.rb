@@ -84,9 +84,9 @@ class Admin::ProductsController < Admin::ResourceController
       end
 
       params[:search][:meta_sort] ||= "name.asc"
-      @search = super.metasearch(params[:search])
+      @search = super.search(params[:search])
 
-      @collection = @search.relation.group_by_products_id.includes({:variants => [:images, :option_values]}).page(params[:page]).per(Spree::Config[:admin_products_per_page])
+      @collection = @search.result(:distinct => true).group_by_products_id.includes({:variants => [:images, :option_values]}).page(params[:page]).per(Spree::Config[:admin_products_per_page])
     else
       includes = [{:variants => [:images,  {:option_values => :option_type}]}, :master, :images]
 

@@ -1,6 +1,6 @@
 class PaymentMethod < ActiveRecord::Base
   DISPLAY =  [:both, :front_end, :back_end]
-  default_scope where(:deleted_at => nil)
+  default_scope -> { where(:deleted_at => nil) }
 
   attr_accessible :type, :name, :display_on, :active, :environment, :description
 
@@ -28,7 +28,7 @@ class PaymentMethod < ActiveRecord::Base
   end
 
   def self.current
-    PaymentMethod.find(:first, :conditions => {:active => true, :environment => Rails.env})
+    PaymentMethod.where({:active => true, :environment => Rails.env}).first
   end
 
   def method_type

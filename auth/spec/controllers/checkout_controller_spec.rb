@@ -42,7 +42,7 @@ describe CheckoutController do
 
     end
 
-    context "when registration step disabled" do
+    pending "when registration step disabled" do
       before do
         Spree::Auth::Config.set(:registration_step => false)
         controller.stub :check_authorization

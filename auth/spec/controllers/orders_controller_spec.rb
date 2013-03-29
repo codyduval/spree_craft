@@ -10,7 +10,7 @@ describe OrdersController do
   let(:guest_user) { mock_model User, :has_role? => false, :email => "user@example.com", :anonymous? => false }
   let(:order) { Order.new }
 
-  it "should understand order routes with token" do
+  pending "should understand order routes with token" do
     assert_routing("/orders/R123456/token/ABCDEF", {:controller => "orders", :action => "show", :id => "R123456", :token => "ABCDEF"})
     token_order_path("R123456", "ABCDEF").should == "/orders/R123456/token/ABCDEF"
   end

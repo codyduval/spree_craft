@@ -236,7 +236,7 @@ module Spree
             value = @preference_values[name][group]
           else
             group_id, group_type = Preference.split_group(group)
-            preference = stored_preferences.find(:first, :conditions => {:name => name, :group_id => group_id, :group_type => group_type})
+            preference = stored_preferences.where(:name => name, :group_id => group_id, :group_type => group_type).first
             value = preference ? preference.value : preference_definitions[name].default_value
           end
 
@@ -277,7 +277,7 @@ module Spree
                 attributes = {:name => name, :group_id => group_id, :group_type => group_type}
 
                 # Find an existing preference or build a new one
-                preference = stored_preferences.find(:first, :conditions => attributes)
+                preference = stored_preferences.where(attributes).first
                 if preference.nil?
                   attribute = attributes.delete(:attribute)
                   preference = stored_preferences.build(attributes)

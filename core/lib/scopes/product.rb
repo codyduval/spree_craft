@@ -47,7 +47,10 @@ module Scopes::Product
     order_text = "products.#{r[2]} "
     order_text << ((r[1] == 'ascend') ?  "asc" : "desc")
 
-    Product.send(:scope, name.to_s, Product.send(:relation).order(order_text) )
+    Product.define_singleton_method(name.to_s) do
+      -> { Product.send(:relation).order(order_text) } 
+    end
+
     Product.search_scopes << name.intern
   end
 
@@ -66,7 +69,7 @@ module Scopes::Product
   # Ryan Bates - http://railscasts.com/episodes/112
   # general merging of conditions, names following the searchlogic pattern
   ::Product.add_search_scope :conditions do |*args|
-    where(args)
+    where(args) 
   end
 
   ::Product.add_search_scope :conditions_all do |*args|
@@ -247,9 +250,9 @@ SQL
       when ActiveRecord::Base then t
       when String
         Taxon.find_by_name(t) ||
-        Taxon.find(:first, :conditions => [
+        Taxon.find(:conditions => [
           "taxons.permalink LIKE ? OR taxons.permalink = ?", "%/#{t}/", "#{t}/"
-        ])
+        ]).first
       end
     }.compact.uniq
   end
