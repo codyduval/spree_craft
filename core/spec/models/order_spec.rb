@@ -134,8 +134,7 @@ describe Order do
     end
 
     it "should log state event" do
-      order.state_change_logs.should_receive(:create)
-      order.finalize!
+      expect { order.finalize! }.to change{order.state_change_logs.count}.by(1)
     end
   end
 

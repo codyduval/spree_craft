@@ -28,3 +28,4 @@ gem 'ransack', :github => 'avit/ransack', :branch => 'rails4-dependencies'
 gem 'actionpack-page_caching', :github => 'rails/actionpack-page_caching' # TODO: refactor and remove
 gem 'actionpack-action_caching', :github => 'rails/actionpack-action_caching'  # TODO: refactor and remove
 gem 'friendly_id', :github => 'norman/friendly_id', :branch => 'rails4'
+gem 'state_machine', :github => 'pluginaweek/state_machine'

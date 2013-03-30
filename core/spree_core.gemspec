@@ -24,14 +24,13 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-rails', '>= 1.0.14'
   s.add_dependency 'highline', '= 1.6.2'
   s.add_dependency 'stringex', '= 1.3.0'
-  s.add_dependency 'state_machine'
   s.add_dependency 'faker', '= 1.0.0'
   s.add_dependency 'paperclip', '= 2.5.0'
   s.add_dependency 'rd_resource_controller'
   s.add_dependency 'activemerchant'
   s.add_dependency 'rails', '4.0.0.beta1'
   s.add_dependency 'kaminari', '>= 0.12.4'
-  s.add_dependency "bartt-ssl_requirement", "~> 1.4.2"
+  s.add_dependency "bartt-ssl_requirement", "~> 1.4.2" # TODO: refactor and remove
   s.add_dependency 'protected_attributes' # TODO: refactor and remove
  
 end

@@ -13,6 +13,7 @@ Factory.define :product do |f|
   f.sku "ABC"
   f.available_on { 1.year.ago }
   f.deleted_at nil
+  f.permalink 'ABC'
 end
 
 Factory.define :product_with_option_types, :parent => :product do |f|

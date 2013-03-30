@@ -46,7 +46,7 @@ class Product < ActiveRecord::Base
   after_save :save_master
 
   has_many :variants,
-    -> { where("#{Variant.table_name}.is_master = FALSE AND #{Variant.table_name}.deleted_at IS NULL").order("#{Variant.table_name}.position ASC") }
+    -> { where("variants.is_master = FALSE AND variants.deleted_at IS NULL").order("variants.position ASC") }
 
   has_many :variants_including_master,
     -> { where("#{Variant.table_name}.deleted_at IS NULL")},
@@ -112,6 +112,15 @@ class Product < ActiveRecord::Base
     joins(:taxons).where("taxons.name = ?", name)
   end
 
+  if (ActiveRecord::Base.connection.adapter_name == 'PostgreSQL')
+    if Product.table_exists?
+      scope :group_by_products_id, -> { group(Product.column_names.map{|col_name| "#{Product.table_name}.#{col_name}"} ) } 
+    end
+  else
+    scope :group_by_products_id, -> { group("#{Product.table_name}.id") }
+  end
+  search_scopes << :group_by_products_id
+
   # ----------------------------------------------------------------------------------------------------------
   #
   # The following methods are deprecated and will be removed in a future version of Spree
@@ -149,7 +158,7 @@ class Product < ActiveRecord::Base
 
   # returns true if the product has any variants (the master variant is not a member of the variants array)
   def has_variants?
-    variants.any?
+    !variants.first.nil?
   end
 
   # returns the number of inventory units "on_hand" for this product
@@ -170,7 +179,7 @@ class Product < ActiveRecord::Base
 
   def tax_category
     if self[:tax_category_id].nil?
-      TaxCategory.first(:conditions => {:is_default => true})
+      TaxCategory.where(:is_default => true).first
     else
       TaxCategory.find(self[:tax_category_id])
     end

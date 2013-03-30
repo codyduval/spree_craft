@@ -49,11 +49,8 @@ describe Creditcard do
       @creditcard.authorize(100, @payment)
     end
 
-
-
     it "should log the response" do
-      @payment.log_entries.should_receive(:create).with(:details => anything)
-      @creditcard.authorize(100, @payment)
+      expect { @creditcard.authorize(100, @payment) }.to change{@payment.log_entries.count}.by(1)
     end
 
     context "when gateway does not match the environment" do
@@ -92,8 +89,7 @@ describe Creditcard do
      @creditcard.purchase(100, @payment)
     end
     it "should log the response" do
-     @payment.log_entries.should_receive(:create).with(:details => anything)
-     @creditcard.purchase(100, @payment)
+      expect { @creditcard.purchase(100, @payment) }.to change{@payment.log_entries.count}.by(1)
     end
     context "when gateway does not match the environment" do
      it "should raise an exception" do
@@ -158,8 +154,7 @@ describe Creditcard do
         @creditcard.capture(@payment)
       end
       it "should log the response" do
-        @payment.log_entries.should_receive(:create).with(:details => anything)
-        @creditcard.capture(@payment)
+        expect { @creditcard.capture(@payment) }.to change{@payment.log_entries.count}.by(1)
       end
       context "when gateway does not match the environment" do
        it "should raise an exception" do
@@ -224,8 +219,7 @@ describe Creditcard do
       @creditcard.void(@payment)
     end
     it "should log the response" do
-      @payment.log_entries.should_receive(:create).with(:details => anything)
-      @creditcard.void(@payment)
+      expect { @creditcard.void(@payment) }.to change{@payment.log_entries.count}.by(1)
     end
     context "when gateway does not match the environment" do
       it "should raise an exception" do
@@ -308,8 +302,7 @@ describe Creditcard do
     end
 
     it "should log the response" do
-      @payment.log_entries.should_receive(:create).with(:details => anything)
-      @creditcard.credit(@payment)
+      expect { @creditcard.credit(@payment) }.to change{@payment.log_entries.count}.by(1)
     end
 
     context "when gateway does not match the environment" do

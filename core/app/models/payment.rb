@@ -3,7 +3,7 @@ class Payment < ActiveRecord::Base
   belongs_to :source, :polymorphic => true
   belongs_to :payment_method
 
-  has_many :offsets, :class_name => 'Payment', :foreign_key => 'source_id', :conditions => "source_type = 'Payment' AND amount < 0 AND state = 'completed'"
+  has_many :offsets, -> { where("source_type = 'Payment' AND amount < 0 AND state = 'completed'") }, :class_name => 'Payment', :foreign_key => 'source_id'
   has_many :log_entries, :as => :source
 
   after_save :create_payment_profile, :if => :profiles_supported?
@@ -15,9 +15,9 @@ class Payment < ActiveRecord::Base
 
   scope :from_creditcard, -> { where(:source_type => 'Creditcard') }
   scope :with_state, -> s { where(:state => s) }
-  scope :completed, with_state('completed')
-  scope :pending, with_state('pending')
-  scope :failed, with_state('failed')
+  scope :completed, -> { with_state('completed') }
+  scope :pending, -> { with_state('pending') }
+  scope :failed, -> { with_state('failed') }
 
   attr_accessible :amount, :order, :type, :name, :display_on, :active, 
                   :environment, :description, :source, :payment_method,

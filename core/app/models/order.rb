@@ -301,7 +301,7 @@ class Order < ActiveRecord::Base
 
   def creditcards
     creditcard_ids = payments.from_creditcard.map(&:source_id).uniq
-    Creditcard.scoped(:conditions => {:id => creditcard_ids})
+    Creditcard.all.find(creditcard_ids)
   end
 
   def process_payments!

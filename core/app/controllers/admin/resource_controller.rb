@@ -162,7 +162,7 @@ class Admin::ResourceController < Admin::BaseController
     if model_class.respond_to?(:accessible_by) && !current_ability.has_block?(params[:action], model_class)
       model_class.accessible_by(current_ability)
     else
-      model_class.scoped
+      model_class.all
     end
   end
 

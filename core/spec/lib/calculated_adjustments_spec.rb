@@ -18,8 +18,9 @@ describe Spree::CalculatedAdjustments do
     let(:target) { order }
 
     it "should be associated with the target" do
-      target.adjustments.should_receive(:create)
+      order.adjustments.count.should == 0
       tax_rate.create_adjustment("foo", target, order)
+      order.adjustments.count.should == 1
     end
 
     it "should have the correct originator and an amount derived from the calculator and supplied calculable" do
