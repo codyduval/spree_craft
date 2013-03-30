@@ -66,14 +66,14 @@ describe Product do
   context "scopes" do
     context ".master_price_lte" do
       it 'produces correct sql' do
-        sql = %Q{SELECT "products".* FROM "products" INNER JOIN "variants" ON "variants"."product_id" = "products"."id" AND variants.is_master = 't' AND variants.deleted_at IS NULL WHERE (variants.price <= 10)}
+        sql = %Q{SELECT \"products\".* FROM \"products\" INNER JOIN \"variants\" ON \"variants\".\"product_id\" = \"products\".\"id\" AND (variants.is_master = TRUE AND variants.deleted_at IS NULL) WHERE (variants.price <= 10)}
         Product.master_price_lte(10).to_sql.gsub('`', '"').sub(/1\b/, "'t'").should == sql.gsub('`', '"').sub(/1\b/, "'t'")
       end
     end
 
     context ".master_price_gte" do
       it 'produces correct sql' do
-        sql = %Q{SELECT "products".* FROM "products" INNER JOIN "variants" ON "variants"."product_id" = "products"."id" AND variants.is_master = 't' AND variants.deleted_at IS NULL WHERE (variants.price >= 10)}
+        sql = %Q{SELECT \"products\".* FROM \"products\" INNER JOIN \"variants\" ON \"variants\".\"product_id\" = \"products\".\"id\" AND (variants.is_master = TRUE AND variants.deleted_at IS NULL) WHERE (variants.price >= 10)}
         Product.master_price_gte(10).to_sql.gsub('`', '"').sub(/1\b/, "'t'").should == sql.gsub('"', '"').sub(/1\b/, "'t'")
       end
     end
