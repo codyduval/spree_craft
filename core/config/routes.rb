@@ -9,14 +9,13 @@ Rails.application.routes.draw do
   resources :tax_categories
 
   # non-restful checkout stuff
-  post '/checkout/:state' => 'checkout#update', :as => :update_checkout
-  put '/checkout/:state' => 'checkout#update', :as => :update_checkout
+  post '/checkout/:state' => 'checkout#update', :as => :update_checkout, :via => [:put, :post]
   get '/checkout/:state' => 'checkout#edit', :as => :checkout_state
   get '/checkout' => 'checkout#edit', :state => 'address', :as => :checkout
 
   # non-restful admin checkout stuff
   post '/admin/orders/:order_number/checkout' => 'admin/checkout#update', :as => :admin_orders_checkout
-  get '/admin/orders/:order_number/checkout/(:state)' => 'admin/checkout#edit', :as => :admin_orders_checkout
+  get '/admin/orders/:order_number/checkout/(:state)' => 'admin/checkout#edit', :as => :admin_orders_checkout_edit
 
   resources :orders do
     post :populate, :on => :collection

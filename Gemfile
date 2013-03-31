@@ -29,3 +29,5 @@ gem 'actionpack-page_caching', :github => 'rails/actionpack-page_caching' # TODO
 gem 'actionpack-action_caching', :github => 'rails/actionpack-action_caching'  # TODO: refactor and remove
 gem 'friendly_id', :github => 'norman/friendly_id', :branch => 'rails4'
 gem 'state_machine', :github => 'pluginaweek/state_machine'
+gem 'rails', :github => 'rails/rails'
+gem 'jquery-rails', :github => 'rails/jquery-rails'
