@@ -27,6 +27,11 @@ module ActiveRecord
 
         if subclass_name.present? && subclass_name != self.name
           subclass = subclass_name.safe_constantize
+
+          unless descendants.include?(subclass)
+            raise ActiveRecord::SubclassNotFound.new("Invalid single-table inheritance type: #{subclass_name} is not a subclass of #{name}")
+          end
+
           subclass
         end
       end
