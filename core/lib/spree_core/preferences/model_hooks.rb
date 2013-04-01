@@ -102,7 +102,7 @@ module Spree
             class_attribute :default_preferences
             self.default_preferences = {}
 
-            has_many  :stored_preferences, :as => :owner, :class_name => 'Preference'
+            has_many :stored_preferences, :as => :owner, :class_name => 'Preference'
 
             after_save :update_preferences
 
@@ -283,6 +283,7 @@ module Spree
                   preference = stored_preferences.build(attributes)
                   preference.attribute = attribute
                 end
+                #binding.pry unless preference.owner
                 preference.value = value
                 preference.save!
               end

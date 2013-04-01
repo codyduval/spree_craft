@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
 
   def check_admin
     return if self.class.admin_created?
-    admin_role = Role.find_or_create_by(name: "admin")
+    admin_role = Role.where(name: "admin").first_or_create
     self.roles << admin_role
   end
 

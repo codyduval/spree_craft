@@ -47,7 +47,7 @@ class SpreeZeroNineZero < ActiveRecord::Migration
 
     create_table "calculators", :force => true do |t|
       t.string   "type"
-      t.integer  "calculable_id",   :null => false
+      t.integer  "calculable_id",   :null => false, :limit => 8
       t.string   "calculable_type", :null => false
       t.datetime "created_at"
       t.datetime "updated_at"
@@ -228,7 +228,7 @@ class SpreeZeroNineZero < ActiveRecord::Migration
 
     create_table "preferences", :force => true do |t|
       t.string   "attribute",  :null => false, :limit => 100
-      t.integer  "owner_id",   :null => false, :limit => 30
+      t.integer  "owner_id",   :null => false
       t.string   "owner_type", :null => false, :limit => 50
       t.integer  "group_id"
       t.string   "group_type", :limit => 50

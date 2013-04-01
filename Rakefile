@@ -17,18 +17,9 @@ end
 
 task :default => :all_tests
 
-desc "Run all tests for sqlite3 only"
+desc "Run all tests for pg only"
 task :all_tests do
-  run_all_tests("sqlite3")
-end
-
-desc "Run all tests for all supported databases"
-task :ci do
-  cmd = "bundle update"; puts cmd; system cmd;
-
-  %w(sqlite3 mysql).each do |database_name|
-    run_all_tests(database_name)
-  end
+  run_all_tests("postgresql")
 end
 
 desc "clean the whole repository by removing all the generated files"

@@ -1,17 +1,7 @@
 login: &login
-<% if database == 'mysql' %>
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
-  pool: 5
-  username: root
-  password:
-  #socket: /tmp/mysql.sock
-<% else %>
-  adapter: sqlite3
-  pool: 5
-  timeout: 5000
-<% end %>
+  adapter: postgresql
+  host: localhost
+  min_messages: ERROR
 
 development:
   <<: *login
