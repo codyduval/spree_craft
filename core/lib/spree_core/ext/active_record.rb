@@ -13,3 +13,23 @@ module ActiveRecord::Persistence
   end
 
 end
+
+module ActiveRecord
+  module Inheritance
+    extend ActiveSupport::Concern
+
+    module ClassMethods
+      # Determines if one of the attributes passed in is the inheritance column,
+      # and if the inheritance column is attr accessible, it initializes an
+      # instance of the given subclass instead of the base class
+      def subclass_from_attrs(attrs)
+        subclass_name = attrs.with_indifferent_access[inheritance_column]
+
+        if subclass_name.present? && subclass_name != self.name
+          subclass = subclass_name.safe_constantize
+          subclass
+        end
+      end
+    end
+  end
+end
