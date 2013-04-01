@@ -25,7 +25,7 @@ class Product < ActiveRecord::Base
   has_many :images, -> { order('position DESC') }, :as => :viewable, :dependent => :destroy
   has_and_belongs_to_many :product_groups
   belongs_to :tax_category
-  has_and_belongs_to_many :taxons
+  has_and_belongs_to_many :taxons, :join_table => 'product_taxons'
   belongs_to :shipping_category
 
   attr_accessible :permalink
