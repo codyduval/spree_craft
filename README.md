@@ -8,5 +8,5 @@ TODO:
 * PaymentMethod has bad inheritance scheme
 * Fix routing tests
 * Fix pending tests
-* App config setting is broken
 * Still nervous about has-many variants SQL
+* Hack out taxons

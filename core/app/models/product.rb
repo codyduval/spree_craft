@@ -25,10 +25,8 @@ class Product < ActiveRecord::Base
   has_many :images, -> { order('position DESC') }, :as => :viewable, :dependent => :destroy
   has_and_belongs_to_many :product_groups
   belongs_to :tax_category
-  has_and_belongs_to_many :taxons, :join_table => 'product_taxons'
+  has_and_belongs_to_many :taxons
   belongs_to :shipping_category
-
-  attr_accessible :permalink
 
   has_one :master,
     -> { where("variants.is_master = TRUE AND variants.deleted_at IS NULL") },
@@ -40,7 +38,6 @@ class Product < ActiveRecord::Base
   after_create :set_master_variant_defaults
   after_create :add_properties_and_option_types_from_prototype
   before_save :recalculate_count_on_hand
-  before_update :sanitize_permalink
   after_save :update_memberships if ProductGroup.table_exists?
   after_save :set_master_on_hand_to_zero_when_product_has_variants
   after_save :save_master
@@ -64,12 +61,12 @@ class Product < ActiveRecord::Base
   end
 
 
-  validates :name, :price, :permalink, :presence => true
+  validates :name, :price, :presence => true
 
   accepts_nested_attributes_for :product_properties, :allow_destroy => true, :reject_if => lambda { |pp| pp[:property_name].blank? }
 
   include FriendlyId
-  friendly_id :permalink
+  friendly_id :name
 
   alias :options :product_option_types
 
@@ -150,11 +147,6 @@ class Product < ActiveRecord::Base
   # ----------------------------------------------------------------------------------------------------------
   # end deprecation region
   # ----------------------------------------------------------------------------------------------------------
-
-  def to_param
-    return permalink if permalink.present?
-    name.to_url
-  end
 
   # returns true if the product has any variants (the master variant is not a member of the variants array)
   def has_variants?
@@ -259,10 +251,6 @@ class Product < ActiveRecord::Base
   end
 
   private
-
-  def sanitize_permalink
-    self.permalink = self.permalink.to_url
-  end
 
   def recalculate_count_on_hand
     product_count_on_hand = has_variants? ?

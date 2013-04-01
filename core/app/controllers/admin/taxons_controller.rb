@@ -21,7 +21,7 @@ class Admin::TaxonsController < Admin::BaseController
   def edit
     @taxonomy = Taxonomy.find(params[:taxonomy_id])
     @taxon = @taxonomy.taxons.find(params[:id])
-    @permalink_part = @taxon.permalink.split("/").last
+    @permalink_part = @taxon.to_param.split("/").last
   end
 
   def update
@@ -59,7 +59,6 @@ class Admin::TaxonsController < Admin::BaseController
       
       if parent_id
         @taxon.reload
-        @taxon.set_permalink
         @taxon.save!
         @update_children = true
       end
@@ -138,7 +137,7 @@ class Admin::TaxonsController < Admin::BaseController
   private
 
   def load_product
-    Product.find_by_permalink! params[:product_id]
+    Product.find params[:product_id]
   end
 
 end

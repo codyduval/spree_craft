@@ -3,7 +3,8 @@ class Taxon < ActiveRecord::Base
 
   belongs_to :taxonomy
   has_and_belongs_to_many :products
-  before_create :set_permalink
+  include FriendlyId
+  friendly_id :name
 
   validates :name, :presence => true
   has_attached_file :icon,
@@ -26,16 +27,6 @@ class Taxon < ActiveRecord::Base
     fs << ProductFilters.price_filter if ProductFilters.respond_to?(:price_filter)
     fs << ProductFilters.brand_filter if ProductFilters.respond_to?(:brand_filter)
     fs
-  end
-
-  # Creates permalink based on .to_url method provided by stringx gem
-  def set_permalink
-    if parent_id.nil?
-      self.permalink = name.to_url if self.permalink.blank?
-    else
-      parent_taxon = Taxon.find(parent_id)
-      self.permalink = [parent_taxon.permalink, (self.permalink.blank? ? name.to_url : self.permalink.split("/").last)].join('/')
-    end
   end
 
   def active_products

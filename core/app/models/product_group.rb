@@ -30,7 +30,6 @@ class ProductGroup < ActiveRecord::Base
   validates :name, :presence => true # TODO ensure that this field is defined as not_null
   validates_associated :product_scopes
 
-  before_save :set_permalink
   after_save :update_memberships
 
   has_and_belongs_to_many :cached_products, :class_name => "Product"
@@ -50,7 +49,7 @@ class ProductGroup < ActiveRecord::Base
     else                        return(nil)
     end
 
-    if pg_name && opg = ProductGroup.find_by_permalink(pg_name)
+    if pg_name && opg = ProductGroup.find(pg_name)
       pg = new.from_product_group(opg)
     elsif attrs
       attrs = url.split("/")
@@ -61,6 +60,9 @@ class ProductGroup < ActiveRecord::Base
 
     pg
   end
+
+  include FriendlyId
+  friendly_id :name
 
   def from_product_group(opg)
     self.product_scopes = opg.product_scopes.map{|ps|
@@ -166,10 +168,6 @@ class ProductGroup < ActiveRecord::Base
     end
   end
 
-  def set_permalink
-    self.permalink = self.name.to_url
-  end
-
   def update_memberships
     # wipe everything directly to avoid expensive in-rails sorting
     ActiveRecord::Base.connection.execute "DELETE FROM product_groups_products WHERE product_group_id = #{self.id}"
@@ -186,10 +184,6 @@ class ProductGroup < ActiveRecord::Base
 
   def to_s
     "<ProductGroup" + (id && "[#{id}]").to_s + ":'#{to_url}'>"
-  end
-  
-  def to_param
-    self.permalink
   end
 
   def order_scope

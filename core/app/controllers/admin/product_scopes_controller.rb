@@ -4,7 +4,7 @@ class Admin::ProductScopesController < Admin::BaseController
   respond_to :html, :js
 
   def create
-    @product_group = ProductGroup.find_by_permalink(params[:product_group_id])
+    @product_group = ProductGroup.find(params[:product_group_id])
     @product_scope = @product_group.product_scopes.build(params[:product_scope])
     if @product_scope.save
       respond_to do |format|

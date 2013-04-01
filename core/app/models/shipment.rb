@@ -25,12 +25,6 @@ class Shipment < ActiveRecord::Base
   scope :ready, -> { where(:state => 'ready') }
   scope :pending, -> { where(:state => 'pending') }
 
-  def to_param
-    self.number if self.number
-    generate_shipment_number unless self.number
-    self.number.parameterize.to_s.upcase
-  end
-
   def shipped=(value)
     return unless value == "1" && shipped_at.nil?
     self.shipped_at = Time.now

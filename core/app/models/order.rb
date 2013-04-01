@@ -54,11 +54,7 @@ class Order < ActiveRecord::Base
   def self.register_update_hook(hook)
     self.update_hooks.add(hook)
   end
-
-  def to_param
-    number.to_s.parameterize.upcase
-  end
-
+  
   def completed?
     !! completed_at
   end

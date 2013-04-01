@@ -5,7 +5,7 @@ class TaxonsController < Spree::BaseController
   respond_to :html
 
   def show
-    @taxon = Taxon.find_by_permalink!(params[:id])
+    @taxon = Taxon.find(params[:id])
     return unless @taxon
 
     @searcher = Spree::Config.searcher_class.new(params.merge(:taxon => @taxon.id))

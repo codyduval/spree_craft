@@ -12,7 +12,7 @@
     <td class="actions"><%= link_to icon('add') + ' ' + t(:select),
                             url_for(:controller => 'admin/option_types',
                                     :id => ot,
-                                    :product_id => @product.permalink,
+                                    :product_id => @product.to_param,
                                     :action => 'select',
                                     :option_type_id =>  ot),
                                     :remote => true,
