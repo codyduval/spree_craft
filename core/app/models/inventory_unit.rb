@@ -7,7 +7,7 @@ class InventoryUnit < ActiveRecord::Base
   scope :backorder, where(:state => 'backordered')
 
   # state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
-  state_machine :initial => 'on_hand' do
+  state_machine :initial => 'on_hand', :action => nil do
     event :fill_backorder do
       transition :to => 'sold', :from => 'backordered'
     end

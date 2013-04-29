@@ -42,7 +42,7 @@ class Shipment < ActiveRecord::Base
   end
 
   # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
-  state_machine :initial => 'pending', :use_transactions => false do
+  state_machine :initial => 'pending', :use_transactions => false, :action => nil do
     event :ready do
       transition :from => 'pending', :to => 'ready'
     end
