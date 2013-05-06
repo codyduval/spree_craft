@@ -133,8 +133,8 @@ class Order < ActiveRecord::Base
     update_payment_state
 
     # give each of the shipments a chance to update themselves
-    shipments.each { |shipment| shipment.update!(self) }#(&:update!)
-    update_shipment_state
+    #shipments.each { |shipment| shipment.update!(self) }#(&:update!)
+    #update_shipment_state
     update_adjustments
     # update totals a second time in case updated adjustments have an effect on the total
     update_totals
@@ -449,7 +449,7 @@ class Order < ActiveRecord::Base
   def round_money(n)
     (n*100).round / 100.0
   end
-  
+
   # Updates the following Order total values:
   #
   # +payment_total+      The total value of all finalized Payments (NOTE: non-finalized Payments are excluded)

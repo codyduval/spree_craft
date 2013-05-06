@@ -251,37 +251,6 @@ describe Order do
         order.stub :shipments => shipments
       end
 
-      it "should set the correct shipment_state (when all shipments are shipped)" do
-        shipments.stub :shipped => [mock_model(Shipment), mock_model(Shipment)]
-        order.update!
-        order.shipment_state.should == "shipped"
-      end
-
-      it "should set the correct shipment_state (when some units are backordered)" do
-        shipments.stub :shipped => [mock_model(Shipment)]
-        order.stub(:backordered?).and_return true
-        order.update!
-        order.shipment_state.should == "backorder"
-      end
-
-      it "should set the shipment_state to partial (when some of the shipments have shipped)" do
-        shipments.stub :shipped => [mock_model(Shipment)]
-        shipments.stub :ready => [mock_model(Shipment)]
-        order.update!
-        order.shipment_state.should == "partial"
-      end
-
-      it "should set the correct shipment_state (when some of the shipments are ready)" do
-        shipments.stub :ready => [mock_model(Shipment), mock_model(Shipment)]
-        order.update!
-        order.shipment_state.should == "ready"
-      end
-
-      it "should set the shipment_state to pending (when all shipments are pending)" do
-        shipments.stub :pending => [mock_model(Shipment), mock_model(Shipment)]
-        order.update!
-        order.shipment_state.should == "pending"
-      end
     end
 
     context "when there are update hooks" do
@@ -321,14 +290,6 @@ describe Order do
       # order.adjustments.stub(:reload).and_return([adjustment])
       # adjustment.should_receive(:update!)
       # order.update!
-    end
-
-    it "should call update! on every shipment" do
-      # shipment = mock_model Shipment
-      shipment = FactoryGirl.create(:shipment)
-      order.shipments = [shipment]
-      shipment.should_receive(:update!)
-      order.update!
     end
   end
 
@@ -483,7 +444,7 @@ describe Order do
   end
 
   context "insufficient_stock_lines" do
-    let(:line_item) { mock_model LineItem, :insufficient_stock? => true } 
+    let(:line_item) { mock_model LineItem, :insufficient_stock? => true }
 
     before { order.stub(:line_items => [line_item]) }
 
@@ -497,10 +458,10 @@ describe Order do
   context "create_tax_charge!" do
     let(:sales_tax) { mock_model Calculator::SalesTax, :compute => 3, :[]= => nil, :description => "Money for the man" }
     let(:rate) { TaxRate.create(:amount => 0.05) }
-    let(:rate_1) { TaxRate.create(:amount => 0.15) } 
+    let(:rate_1) { TaxRate.create(:amount => 0.15) }
 
     it "should destory all existing tax adjustments" do
-      adjustment = mock_model(Adjustment, :amount => 5, :calculator => :sales_tax) 
+      adjustment = mock_model(Adjustment, :amount => 5, :calculator => :sales_tax)
       adjustment.should_receive :destroy
 
       order.stub_chain :adjustments, :tax => [adjustment]
@@ -513,7 +474,7 @@ describe Order do
 
       order.create_tax_charge!
       order.adjustments.tax.size.should == 2
- 
+
       ["Money for the man 5.0%", "Money for the man 15.0%"].each do |label|
         order.adjustments.tax.map(&:label).include?(label).should be_true
       end
