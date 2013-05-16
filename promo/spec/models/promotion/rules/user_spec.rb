@@ -7,7 +7,7 @@ describe Promotion::Rules::User do
     let(:order) { Order.new }
 
     it "should be eligible if users are not provided" do
-      users = mock("users", :none? => true)
+      users = double("users", :none? => true)
       rule.stub(:users => users)
 
       rule.should be_eligible(order)

@@ -7,7 +7,7 @@ describe Shipment do
   end
 
   let(:order) { mock_model Order, :backordered? => false }
-  let(:shipping_method) { mock_model ShippingMethod, :calculator => mock('calculator') }
+  let(:shipping_method) { mock_model ShippingMethod, :calculator => double('calculator') }
   let(:shipment) { Shipment.new :order => order, :state => 'pending', :shipping_method => shipping_method }
 
   let(:charge) { mock_model Adjustment, :amount => 10, :source => shipment }
@@ -138,7 +138,7 @@ describe Shipment do
     end
 
     it "should send a shipment email" do
-      mail_message = mock "Mail::Message"
+      mail_message = double "Mail::Message"
       ShipmentMailer.should_receive(:shipped_email).with(shipment).and_return mail_message
       mail_message.should_receive :deliver
       shipment.ship!

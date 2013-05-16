@@ -8,7 +8,7 @@ describe Order do
 
   let(:order) { FactoryGirl.create(:order) }
   let(:gateway) { Gateway::Bogus.new(:name => "Credit Card", :active => true) }
-  let(:mail_method) { mock("mail_method", :preferred_mails_from => 'example@example.com', :preferred_intercept_email => nil, :preferred_mail_bcc => nil) }
+  let(:mail_method) { double("mail_method", :preferred_mails_from => 'example@example.com', :preferred_intercept_email => nil, :preferred_mail_bcc => nil) }
 
 
   before do
@@ -119,7 +119,7 @@ describe Order do
     end
 
     it "should send an order confirmation email" do
-      mail_message = mock "Mail::Message"
+      mail_message = double "Mail::Message"
       OrderMailer.should_receive(:confirm_email).with(order).and_return mail_message
       mail_message.should_receive :deliver
       order.finalize!
@@ -140,7 +140,7 @@ describe Order do
 
   context "#process_payments!" do
     it "should process the payments" do
-      order.stub!(:payments).and_return([mock(Payment)])
+      order.stub(:payments).and_return([double(Payment)])
       order.payment.should_receive(:process!)
       order.process_payments!
     end
@@ -213,11 +213,11 @@ describe Order do
     end
 
     context "when payments are insufficient" do
-      let(:payments) { mock "payments", :completed => [], :first => mock_model(Payment, :checkout? => false) }
+      let(:payments) { double "payments", :completed => [], :first => mock_model(Payment, :checkout? => false) }
       before { order.stub :total => 100, :payment_total => 50, :payments => payments }
 
       context "when last payment did not fail" do
-        before { payments.stub :last => mock("payment", :state => 'pending') }
+        before { payments.stub :last => double("payment", :state => 'pending') }
         it "should set payment_state to balance_due" do
           order.update!
           order.payment_state.should == "balance_due"
@@ -225,7 +225,7 @@ describe Order do
       end
 
       context "when last payment failed" do
-        before { payments.stub :last => mock("payment", :state => 'failed') }
+        before { payments.stub :last => double("payment", :state => 'failed') }
         it "should set the payment_state to failed" do
           order.update!
           order.payment_state.should == "failed"
@@ -422,7 +422,7 @@ describe Order do
       order.stub :allow_cancel? => true
     end
     it "should send a cancel email" do
-      mail_message = mock "Mail::Message"
+      mail_message = double "Mail::Message"
       OrderMailer.should_receive(:cancel_email).with(order).and_return mail_message
       mail_message.should_receive :deliver
       order.cancel!
@@ -460,8 +460,8 @@ describe Order do
   end
 
   context "rate_hash" do
-    let(:shipping_method_1) { mock_model ShippingMethod, :name => 'Air Shipping', :id => 1, :calculator => mock('calculator') }
-    let(:shipping_method_2) { mock_model ShippingMethod, :name => 'Ground Shipping', :id => 2, :calculator => mock('calculator') }
+    let(:shipping_method_1) { mock_model ShippingMethod, :name => 'Air Shipping', :id => 1, :calculator => double('calculator') }
+    let(:shipping_method_2) { mock_model ShippingMethod, :name => 'Ground Shipping', :id => 2, :calculator => double('calculator') }
 
     before do
       shipping_method_1.calculator.stub(:compute).and_return(10.0)
@@ -482,7 +482,7 @@ describe Order do
   end
 
   context "insufficient_stock_lines" do
-    let(:line_item) { mock_model LineItem, :insufficient_stock? => true } 
+    let(:line_item) { mock_model LineItem, :insufficient_stock? => true }
 
     before { order.stub(:line_items => [line_item]) }
 
@@ -496,10 +496,10 @@ describe Order do
   context "create_tax_charge!" do
     let(:sales_tax) { mock_model Calculator::SalesTax, :compute => 3, :[]= => nil, :description => "Money for the man" }
     let(:rate) { TaxRate.create(:amount => 0.05) }
-    let(:rate_1) { TaxRate.create(:amount => 0.15) } 
+    let(:rate_1) { TaxRate.create(:amount => 0.15) }
 
     it "should destory all existing tax adjustments" do
-      adjustment = mock_model(Adjustment, :amount => 5, :calculator => :sales_tax) 
+      adjustment = mock_model(Adjustment, :amount => 5, :calculator => :sales_tax)
       adjustment.should_receive :destroy
 
       order.stub_chain :adjustments, :tax => [adjustment]
@@ -512,7 +512,7 @@ describe Order do
 
       order.create_tax_charge!
       order.adjustments.tax.size.should == 2
- 
+
       ["Money for the man 5.0%", "Money for the man 15.0%"].each do |label|
         order.adjustments.tax.map(&:label).include?(label).should be_true
       end

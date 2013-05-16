@@ -15,16 +15,16 @@ describe Payment do
     @payment.payment_method = stub_model(PaymentMethod)
     @payment.payment_method.stub(:source_required? => true)
     @payment.source = mock_model(Creditcard, :save => true, :payment_gateway => nil, :process => nil, :credit => nil, :changed_for_autosave? => false)
-    @payment.stub!(:valid?).and_return(true)
-    @payment.stub!(:check_payments).and_return(nil)
+    @payment.stub(:valid?).and_return(true)
+    @payment.stub(:check_payments).and_return(nil)
 
-    order.payments.stub!(:reload).and_return([@payment])
+    order.payments.stub(:reload).and_return([@payment])
   end
 
   context "#process!" do
     context "when state is checkout" do
       before(:each) do
-        @payment.source.stub!(:process!).and_return(nil)
+        @payment.source.stub(:process!).and_return(nil)
       end
       it "should process the source" do
         @payment.source.should_receive(:process!)

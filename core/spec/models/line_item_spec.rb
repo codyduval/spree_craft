@@ -8,10 +8,10 @@ describe LineItem do
 
   let(:variant) { mock_model(Variant, :count_on_hand => 95, :price => 9.99) }
   let(:line_item) { line_item = LineItem.new(:quantity => 5) }
-  let(:order) { mock_model(Order, :line_items => [line_item], :inventory_units => [], :shipments => mock('shipments'), :completed? => true, :update! => true) }
+  let(:order) { mock_model(Order, :line_items => [line_item], :inventory_units => [], :shipments => double('shipments'), :completed? => true, :update! => true) }
 
   before do
-    line_item.stub(:order => order, :variant => variant, :new_record? => false) 
+    line_item.stub(:order => order, :variant => variant, :new_record? => false)
     Spree::Config.set :allow_backorders => true
   end
 
@@ -120,7 +120,7 @@ describe LineItem do
 
   context "(in)sufficient_stock?" do
 
-    context "when backordering is disabled" do 
+    context "when backordering is disabled" do
       before { Spree::Config.set :allow_backorders => false }
 
       it "should report insufficient stock when variant is out of stock" do

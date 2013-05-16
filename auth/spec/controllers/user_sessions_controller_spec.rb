@@ -8,7 +8,7 @@ describe UserSessionsController do
 
   context "#create" do
     context "when current_order is associated with a guest user" do
-      let(:user) { mock User }
+      let(:user) { double User }
       let(:order) { mock_model Order }
 
       before do

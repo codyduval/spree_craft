@@ -2,7 +2,7 @@ require 'spec_helper'
 
 # We'll use the OrderMailer as a quick and easy way to test.  IF it works here - it works for all email (in theory.)
 describe OrderMailer do
-  let(:mail_method) { mock("mail_method", :preferred_mails_from => 'example@example.com', :preferred_intercept_email => nil, :preferred_mail_bcc => nil) }
+  let(:mail_method) { double("mail_method", :preferred_mails_from => 'example@example.com', :preferred_intercept_email => nil, :preferred_mail_bcc => nil) }
   let(:order) { Order.new(:email => "customer@example.com") }
   let(:message) { OrderMailer.confirm_email(order) }
   #let(:email) { mock "email" }

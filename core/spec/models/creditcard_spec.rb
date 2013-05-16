@@ -14,8 +14,8 @@ describe Creditcard do
     @creditcard = Creditcard.new
     @payment = Payment.create(:amount => 100, :order => @order)
 
-    @success_response = mock('gateway_response', :success? => true, :authorization => '123', :avs_result => {'code' => 'avs-code'})
-    @fail_response = mock('gateway_response', :success? => false)
+    @success_response = double('gateway_response', :success? => true, :authorization => '123', :avs_result => {'code' => 'avs-code'})
+    @fail_response = double('gateway_response', :success? => false)
 
     @payment_gateway = mock_model(PaymentMethod,
       :payment_profiles_supported? => true,
@@ -478,7 +478,7 @@ describe Creditcard do
         @creditcard.spree_cc_type.should == "visa"
       end
 
-      after do 
+      after do
         Rails.env = "test"
       end
     end

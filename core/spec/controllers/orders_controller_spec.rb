@@ -70,7 +70,7 @@ describe OrdersController do
 
   context "#empty" do
     it "should destroy line items in the current order" do
-      controller.stub!(:current_order).and_return(order)
+      controller.stub(:current_order).and_return(order)
       order.stub(:line_items).and_return([])
       order.line_items.should_receive(:destroy_all)
       put :empty
