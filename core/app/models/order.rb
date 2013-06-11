@@ -458,9 +458,9 @@ class Order < ActiveRecord::Base
   # +total+              The so-called "order total."  This is equivalent to +item_total+ plus +adjustment_total+.
   def update_totals
     # update_adjustments
-    self.payment_total = payments.completed.map(&:amount).sum
-    self.item_total = line_items.map(&:amount).sum
-    self.adjustment_total = adjustments.eligible.map(&:amount).sum
+    self.payment_total = payments.completed.map(&:amount).compact.try(:sum)
+    self.item_total = line_items.map(&:amount).compact.try(:sum)
+    self.adjustment_total = adjustments.eligible.map(&:amount).compact.try(:sum)
     self.total = item_total + adjustment_total
   end
 
