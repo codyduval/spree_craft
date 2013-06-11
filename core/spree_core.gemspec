@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'highline', '= 1.6.2'
   s.add_dependency 'stringex', '= 1.3.0'
   s.add_dependency 'state_machine'
-  s.add_dependency 'faker', '= 1.0.0'
+  s.add_dependency 'faker'
   s.add_dependency 'paperclip', '= 2.5.0'
   s.add_dependency 'rd_resource_controller'
   s.add_dependency 'meta_search', '>= 1.1.1'
