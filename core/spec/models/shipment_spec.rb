@@ -150,7 +150,7 @@ describe Shipment do
     before { shipment.stub(:reload) }
 
     it "should create adjustment when not present" do
-      shipping_method.should_receive(:create_adjustment).with(I18n.t(:shipping), order, shipment, true)
+      shipping_method.should_receive(:create_adjustment).with(I18n.t(:shipping), order, shipment, false)
       shipment.send(:ensure_correct_adjustment)
     end
 
