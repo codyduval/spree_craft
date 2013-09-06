@@ -142,7 +142,7 @@ class Shipment < ActiveRecord::Base
       adjustment.originator = shipping_method
       adjustment.save
     else
-      shipping_method.create_adjustment(I18n.t(:shipping), order, self, true)
+      shipping_method.create_adjustment(I18n.t(:shipping), order, self, false)
       reload #ensure adjustment is present on later saves
     end
   end
