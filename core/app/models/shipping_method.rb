@@ -18,7 +18,12 @@ class ShippingMethod < ActiveRecord::Base
     availability_check && zone_check
   end
 
-  alias :eligible? :available_to_order?
+  def eligible?(shipment, display_on=nil)
+    order = shipment.order
+    availability_check = available?(order,display_on)
+    zone_check = zone && zone.include?(order.ship_address)
+    availability_check && zone_check
+  end
 
   def self.all_available(order, display_on=nil)
     all.select { |method| method.available_to_order?(order,display_on)}
