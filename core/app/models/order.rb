@@ -176,7 +176,7 @@ class Order < ActiveRecord::Base
   end
 
   def delivery_required_and_not_adjusted?
-    delivery_required && !adjustments.shipping.any?
+    delivery_required? && !adjustments.shipping.any?
   end
 
   before_validation :clone_billing_address, :if => "@use_billing"
