@@ -12,7 +12,7 @@ class ShippingMethod < ActiveRecord::Base
     display_check && calculator_check
   end
 
-  alias :eligible?, :available?
+  alias :eligible? :available?
 
   def available_to_order?(order, display_on=nil)
     availability_check = available?(order,display_on)
