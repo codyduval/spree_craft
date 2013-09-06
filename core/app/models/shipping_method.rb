@@ -12,6 +12,8 @@ class ShippingMethod < ActiveRecord::Base
     display_check && calculator_check
   end
 
+  alias_method :available?, :eligible?
+
   def available_to_order?(order, display_on=nil)
     availability_check = available?(order,display_on)
     zone_check = zone && zone.include?(order.ship_address)
