@@ -83,6 +83,7 @@ class Order < ActiveRecord::Base
   state_machine :initial => 'cart', :use_transactions => false do
 
     event :next do
+      transition :to => 'delivery', :if => :delivery_required_and_not_adjusted?
       transition :from => 'cart',     :to => 'address'
       transition :from => 'address',  :to => 'delivery', :if => :delivery_required?
       transition :from => 'address',  :to => 'payment'
@@ -172,6 +173,10 @@ class Order < ActiveRecord::Base
 
   def delivery_required?
     false
+  end
+
+  def delivery_required_and_not_adjusted?
+    delivery_required && !adjustments.shipping.any?
   end
 
   before_validation :clone_billing_address, :if => "@use_billing"
