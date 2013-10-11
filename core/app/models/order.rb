@@ -109,6 +109,7 @@ class Order < ActiveRecord::Base
         order.process_payments!
       rescue Spree::GatewayError => ex
         order.errors.add(:base, ex.message)
+        throw :halt
       end
     end
 
