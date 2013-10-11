@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   match '/admin/orders/:order_number/checkout' => 'admin/checkout#update', :method => :post, :as => :admin_orders_checkout
   match '/admin/orders/:order_number/checkout/(:state)' => 'admin/checkout#edit', :method => :get, :as => :admin_orders_checkout
 
-  resources :orders do
+  resources :orders, :except => :new do
     post :populate, :on => :collection
 
     resources :line_items
@@ -192,7 +192,7 @@ Rails.application.routes.draw do
     resources :trackers
     resources :payment_methods
     resources :mail_methods
-    
+
   end
 
   match '/admin' => 'admin/orders#index', :as => :admin
