@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   # non-restful admin checkout stuff
   post '/admin/orders/:order_number/checkout' => 'admin/checkout#update', :as => :admin_orders_checkout
-  get '/admin/orders/:order_number/checkout/(:state)' => 'admin/checkout#edit', :as => :admin_orders_checkout
+  get '/admin/orders/:order_number/checkout/(:state)' => 'admin/checkout#edit'
 
   resources :orders, :except => :new do
     post :populate, :on => :collection
