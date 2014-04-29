@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   post '/checkout/:state' => 'checkout#update', :as => :update_checkout
   put '/checkout/:state' => 'checkout#update'
   get '/checkout/:state' => 'checkout#edit', :as => :checkout_state
-  match '/checkout' => 'checkout#edit', :state => 'address', :as => :checkout, :via => :any
+  match '/checkout' => 'checkout#edit', :state => 'address', :as => :checkout, :via => :post
 
   # non-restful admin checkout stuff
   post '/admin/orders/:order_number/checkout' => 'admin/checkout#update', :as => :admin_orders_checkout
