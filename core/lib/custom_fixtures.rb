@@ -1,7 +1,7 @@
 require 'active_record/fixtures'
 
 module Spree
-  class Fixtures < ActiveRecord::Fixtures
+  class Fixtures < ActiveRecord::FixtureSet
     # Replace this method to prevent the table being emptied on each call. Needed
     # when both core & auth have user fixtures, see below for code commented out.
     #
