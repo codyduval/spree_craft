@@ -195,7 +195,7 @@ Rails.application.routes.draw do
 
   end
 
-  match '/admin' => 'admin/orders#index', :as => :admin, :via => :any
+  match '/admin' => 'admin/orders#index', :as => :admin_index, :via => :any
 
   match '/content/cvv' => 'content#cvv', :via => :any
 
