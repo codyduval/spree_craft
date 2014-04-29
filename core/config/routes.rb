@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :products
 
-  match '/locale/set' => 'locale#set', :via => any
+  match '/locale/set' => 'locale#set', :via => :any
 
   resources :tax_categories
 
